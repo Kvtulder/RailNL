@@ -109,6 +109,3 @@ def visualise(stations, tracks):
     x, y = my_map(longcritical, latcritical)
     plt.plot(x, y, 'bo', markersize=4, label="Niet-kritieke stations")
     plt.show()
-
-
-visualise(load_stations(), load_tracks())
