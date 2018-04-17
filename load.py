@@ -1,4 +1,4 @@
-# import libraties
+# import libraries
 import csv
 import objects
 
@@ -39,7 +39,20 @@ def load_tracks(stations):
 
 # searches a station in a list of stations
 def get_station_by_name(stations, name):
-    # TODO better algorithm? list is sorted -> binary sort
-    for station in stations:
-        if station.name == name:
-            return station
+    return search_binary(stations, name)
+
+# searches sorted list through binary search
+def search_binary(stations, station):
+    if len(stations) == 0:
+        return False
+    else:
+        midpoint = len(stations)// 2
+
+        if stations[midpoint].name == station:
+            return stations[midpoint]
+        elif station < stations[midpoint].name:
+            return search_binary(stations[:midpoint], station)
+        elif station > stations[midpoint].name:
+            return search_binary(stations[midpoint + 1:], station)
+        else:
+            return False

@@ -16,6 +16,7 @@ def draw_map(stations, tracks):
     latcritical = []
     longcritical = []
 
+
     # sort stations in two lists: critical and non-critical
     for station in stations:
         if station.critical:
