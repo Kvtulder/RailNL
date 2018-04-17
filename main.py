@@ -14,7 +14,9 @@ def __main__():
 
     print("{}".format(line1))
 
-    line1.add_station(stations[0])
+    line1.add_station(stations[7])
     print("{}".format(line1))
+
+    print(line1.get_total_time())
 
 __main__()
