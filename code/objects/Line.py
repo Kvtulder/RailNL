@@ -1,7 +1,10 @@
 class Line:
     def __init__(self, stations=[]):
         self.stations = stations
-        self.total_time = self.get_total_time()
+        if len(stations) > 1:
+            self.total_time = self.get_total_time()
+        else:
+            self.total_time = 0
 
     def __format__(self, format_spec):
         if isinstance(format_spec, str):
@@ -12,17 +15,20 @@ class Line:
             return message
 
     # Adds a new station to the list
-    def add_station(self, station):
+    def add_station(self, destination):
         # check if first station, if not: check if they're connected
         if not self.stations:
-            self.stations.append(station)
-        elif station in self.stations[-1].connections:
-            self.stations.append(station)
-            self.total_time += self.stations[-1].connections.duration
+            self.stations.append(destination)
+            return
+
+        station = self.get_last_station()
+        if destination.name in station.connections:
+            self.stations.append(destination)
+            self.total_time += float(station.connections[destination.name].duration)
         else:
             raise StationNotConnectedError(
-                "{} is not connected to {}".format(self.stations[-1].name,
-                                                   station.name))
+                "{} is not connected to {}".format(station.name,
+                                                   destination.name))
 
     # calculates the total duration of the line
     def get_total_time(self):
@@ -30,9 +36,15 @@ class Line:
         for i in range(0, len(self.stations) - 1):
             current_station = self.stations[i]
             destination = self.stations[i + 1]
-            total += float(current_station.connections[destination].duration)
+            total += float(current_station.connections[destination.name].duration)
 
         return total
+
+    def remove_last_station(self):
+        del self.stations[-1]
+
+    def get_last_station(self):
+        return self.stations[-1]
 
 
 class StationNotConnectedError(Exception):

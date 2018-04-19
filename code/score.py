@@ -1,4 +1,4 @@
-def get_score(lines, tracks):
+def get_score(tracks, lines):
     critical_tracks = {}
     ridden_tracks = {}
     total_time = 0
@@ -29,7 +29,6 @@ def get_score(lines, tracks):
                     ridden_tracks.update({key2 : tracks[key2]})
 
 
-    percentage = float(len(critical_tracks)) / len(ridden_tracks)
     score = percentage * 10000 - trains * 20 - (total_time / 10)
 
     return score
