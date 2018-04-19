@@ -3,8 +3,8 @@ import csv
 import objects
 
 # define constants
-FILE_NAME_STATIONS = "data/StationsNationaal.csv"
-FILE_NAME_TRACKS = "data/ConnectiesNationaal.csv"
+FILE_NAME_STATIONS = "data/StationsHolland.csv"
+FILE_NAME_TRACKS = "data/ConnectiesHolland.csv"
 
 
 # loads all the stations form the data in the csv file

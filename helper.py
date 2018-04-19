@@ -1,5 +1,5 @@
 # calculates and returns the score of the current sollution
-def get_score():
+def get_score(lines):
         # TODO: get the percentage of ridden critical tracks
         return 0
 
@@ -23,7 +23,3 @@ def get_time_between_stations(tracks, station_a, station_b):
 
     # no match found -> no valid connection between stations. Return 0
     return 0
-
-
-
-

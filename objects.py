@@ -9,6 +9,8 @@ class Station:
         self.longitude = longitude
         self.critical = critical
 
+    def add_connection(self, station, duration):
+
 
 class Track:
     def __init__(self, station_a, station_b, time):
@@ -25,14 +27,15 @@ class Line:
 
     def __format__(self, format_spec):
         if isinstance(format_spec, str):
-            message = "Track: "
+            message = "Track: : "
             for station in self.stations:
                 message += "{}, ".format(station.name)
+            message += "duration: {}".format(self.total_time)
             return message
 
     # Adds a new station to the list
     def add_station(self, station):
-        
+
         # check if first station
         if not self.stations:
             self.stations.append(station)
@@ -43,7 +46,7 @@ class Line:
                     self.stations[-1], station))
                 return -1
 
-        # valid connection, add to the list and update the time
+        # valid connection, add to the list ands update the time
         self.stations.append(station)
         if len(self.stations) > 1:
             self.update_time()
@@ -63,7 +66,6 @@ class Line:
     def update_time(self):
         self.total_time += helper.get_time_between_stations(
             self.tracks, self.stations[-2], self.stations[-1])
-
 
 
 
