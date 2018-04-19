@@ -9,8 +9,6 @@ class Station:
         self.longitude = longitude
         self.critical = critical
 
-    def add_connection(self, station, duration):
-
 
 class Track:
     def __init__(self, station_a, station_b, time):
