@@ -41,12 +41,13 @@ def load_tracks(stations):
 def get_station_by_name(stations, name):
     return search_binary(stations, name)
 
+
 # searches sorted list through binary search
 def search_binary(stations, station):
     if len(stations) == 0:
         return False
     else:
-        midpoint = len(stations)// 2
+        midpoint = len(stations) // 2
 
         if stations[midpoint].name == station:
             return stations[midpoint]
