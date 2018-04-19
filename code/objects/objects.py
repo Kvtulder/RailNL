@@ -1,6 +1,5 @@
 import helper
 
-
 # define objects
 class Station:
     def __init__(self, name, latitude, longitude, critical):
@@ -11,7 +10,8 @@ class Station:
 
 
 class Track:
-    def __init__(self, station_a, station_b, time, critical):
+    def __init__(self, id, station_a, station_b, time, critical):
+        self.id = id
         self.station_a = station_a
         self.station_b = station_b
         self.time = float(time)

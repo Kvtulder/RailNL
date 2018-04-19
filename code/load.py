@@ -2,9 +2,12 @@
 import csv
 import objects
 
+from objects.objects import *
+
+
 # define constants
-FILE_NAME_STATIONS = "data/StationsHolland.csv"
-FILE_NAME_TRACKS = "data/ConnectiesHolland.csv"
+FILE_NAME_STATIONS = "../data/StationsHolland.csv"
+FILE_NAME_TRACKS = "../data/ConnectiesHolland.csv"
 
 
 # loads all the stations form the data in the csv file
@@ -16,11 +19,11 @@ def load_stations():
         reader = csv.reader(file)
         for row in reader:
             if len(row) > 3:
-                stations.update({row[0]:objects.Station(row[0], row[1], row[2],row[3] == 'Kritiek')})
+                stations.update({
+                    row[0]: Station(row[0], row[1], row[2],row[3] == 'Kritiek')})
             else:
-                stations.update({row[0]: objects.Station(row[0], row[1], row[2], False)})
-
-    file.close()
+                stations.update({
+                    row[0]: Station(row[0], row[1], row[2], False)})
 
     return stations
 
@@ -28,21 +31,25 @@ def load_stations():
 # loads all the tracks form the data in the csv file
 def load_tracks(stations):
 
-    tracks = []
+    tracks = {}
+
+    row_id = 0
+
     with open(FILE_NAME_TRACKS) as file:
         reader = csv.reader(file)
         for row in reader:
-                if stations[row[0]].critical != False:
-                    tracks.append(
-                        objects.Track(get_station_by_name(stations, row[0]),
-                                      get_station_by_name(stations, row[1]),
-                                      row[2], True))
-                else:
-                    tracks.append(
-                        objects.Track(get_station_by_name(stations, row[0]),
-                                      get_station_by_name(stations, row[1]),
-                                      row[2], False))
-    file.close()
+            if stations[row[0]].critical != False:
+                tracks.update({
+                    row_id : Track(row_id, get_station_by_name(stations, row[0]),
+                                   get_station_by_name(stations, row[1]), row[2],
+                                   True)})
+            else:
+                tracks.update({
+                    row_id : Track(row_id, get_station_by_name(stations, row[0]),
+                                   get_station_by_name(stations, row[1]), row[2],
+                                   False)})
+
+            row_id += 1
 
     return tracks
 
@@ -55,18 +62,3 @@ def get_station_by_name(stations, name):
         return False
 
 
-# # searches sorted list through binary search
-# def search_binary(stations, name):
-#     if len(stations) == 0:
-#         return False
-#     else:
-#         midpoint = len(stations)// 2
-#
-#         if stations[midpoint].name == name:
-#             return stations[midpoint]
-#         elif name < stations[midpoint].name:
-#             return search_binary(stations[:midpoint], name)
-#         elif name > stations[midpoint].name:
-#             return search_binary(stations[midpoint + 1:], name)
-#         else:
-#             return False
