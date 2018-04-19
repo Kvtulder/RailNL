@@ -11,10 +11,11 @@ class Station:
 
 
 class Track:
-    def __init__(self, station_a, station_b, time):
+    def __init__(self, station_a, station_b, time, critical):
         self.station_a = station_a
         self.station_b = station_b
         self.time = float(time)
+        self.critical = critical
 
 
 class Line:

@@ -9,12 +9,12 @@ def __main__():
     # test: create line between amsterdam centraal and amstel
 
     line1 = objects.Line(tracks)
-    line1.add_station(stations[5])
-    line1.add_station(stations[6])
+    line1.add_station(stations["Amsterdam Amstel"])
+    line1.add_station(stations["Amsterdam Centraal"])
 
     print("{}".format(line1))
 
-    line1.add_station(stations[7])
+    line1.add_station(stations["Amsterdam Sloterdijk"])
     print("{}".format(line1))
 
     print(line1.get_total_time())
