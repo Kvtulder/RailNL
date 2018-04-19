@@ -23,10 +23,10 @@ def get_score(lines, tracks):
 
             if key1 in tracks:
                 if key1 not in ridden_tracks:
-                    ridden_tracks.update{key1 : tracks[key1]}
+                    ridden_tracks.update({key1 : tracks[key1]})
             elif key2 in tracks:
                 if key2 not in ridden_tracks:
-                    ridden_tracks.update{key2 : tracks[key2]}
+                    ridden_tracks.update({key2 : tracks[key2]})
 
 
     percentage = float(len(critical_tracks)) / len(ridden_tracks)
