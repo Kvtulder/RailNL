@@ -3,8 +3,6 @@ import csv
 from objects.Station import Station
 from objects.Track import Track
 
-from objects.objects import *
-
 
 # define constants
 FILE_NAME_STATIONS = "../data/StationsHolland.csv"

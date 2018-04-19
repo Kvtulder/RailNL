@@ -19,15 +19,9 @@ class Line:
         if not self.stations:
             self.stations.append(station)
 
-        if not station in self.stations[-1].surrounding:
-                print("Warning: {} not connected to {}".format(
-                    self.stations[-1], station))
-                return -1
-
         # valid connection, add to the list ands update the time
         self.stations.append(station)
-        if len(self.stations) > 1:
-            self.update_time()
+
 
         return 0
 
@@ -40,8 +34,4 @@ class Line:
 
         return total
 
-    # updates the time after a station is added to the list.
-    def update_time(self):
-        self.total_time += helper.get_time_between_stations(
-            self.tracks, self.stations[-2], self.stations[-1])
 
