@@ -1,7 +1,6 @@
 class Track:
-    def __init__(self, id, station_a, station_b, time, critical):
-        self.id = id
-        self.station_a = station_a
-        self.station_b = station_b
-        self.time = time
+    def __init__(self, destination, duration, critical,start=None):
+        self.destination = destination
+        self.duration = duration
         self.critical = critical
+        self.start = start
