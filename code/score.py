@@ -28,7 +28,10 @@ def get_score(tracks, lines):
                 if key2 not in ridden_tracks:
                     ridden_tracks.update({key2 : tracks[key2]})
 
+    #print("{} critical tracks and {} of them are ridden".format(
+     #   len(critical_tracks), len(ridden_tracks)))
 
+    percentage = len(ridden_tracks) / len(critical_tracks)
     score = percentage * 10000 - trains * 20 - (total_time / 10)
 
     return score

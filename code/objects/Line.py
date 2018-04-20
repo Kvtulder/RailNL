@@ -41,6 +41,11 @@ class Line:
         return total
 
     def remove_last_station(self):
+        # calculate the duration to the last station and remove that
+        self.total_time -= float(self.stations[-2]
+                                 .connections[self.stations[-1].name].duration)
+
+        # delete the station from the list
         del self.stations[-1]
 
     def get_last_station(self):
