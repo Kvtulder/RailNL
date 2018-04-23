@@ -1,16 +1,7 @@
-import load
 import score
 from objects.Line import Line
 import random
 import matplotlib.pyplot as plt
-
-
-stations = load.load_stations()
-tracks = load.load_tracks(stations)
-
-line1 = Line([stations["Amsterdam Amstel"], stations["Amsterdam Centraal"]])
-line1.add_station(stations["Amsterdam Sloterdijk"])
-
 
 def random(num_of_lines, max_duration, num_of_critital_tracks=None):
     lines = []
@@ -97,5 +88,3 @@ def hist(NUM):
     for line in best_sollution:
         print("{}".format(line))
     plt.show()
-
-hist(10000)
