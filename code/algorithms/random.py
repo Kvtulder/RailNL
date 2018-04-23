@@ -4,6 +4,9 @@ import random
 import matplotlib.pyplot as plt
 
 
+# creates a random solution with two constrains: n tracks with a max duration of
+# n minutes and all the stations need to be connected. Returns the score and
+# the generated lines
 def random1(stations, tracks, num_of_lines, max_duration, num_of_critital_tracks=None):
     lines = []
 
@@ -24,6 +27,8 @@ def random1(stations, tracks, num_of_lines, max_duration, num_of_critital_tracks
     return score.get_score(lines, tracks, num_of_critital_tracks), lines
 
 
+# same as random1 but with a extra constraint: A line can't go backwards over
+# the same track.
 def random2(stations, tracks, num_of_lines, max_duration, num_of_critical_tracks=None):
     lines = []
     used_tracks = {}
@@ -71,7 +76,7 @@ def random2(stations, tracks, num_of_lines, max_duration, num_of_critical_tracks
 def hist(NUM):
 
     best_score = 0
-    best_sollution = None
+    best_solution = None
 
     num_of_critical_tracks = score.get_num_of_critical_tracks(tracks)
     scores = []
@@ -79,7 +84,7 @@ def hist(NUM):
         test, lines = random2(7, 120, num_of_critical_tracks)
         scores.append(test)
         if test > best_score:
-            best_sollution = lines
+            best_solution = lines
     plt.hist(scores, 30, normed=1)
     plt.xlabel("Score")
     plt.ylabel("Probability")
@@ -87,6 +92,6 @@ def hist(NUM):
 
     print("Random algorithm repeated {} times. Average score: {}."
           " Best score: {}".format(NUM, sum(scores) / len(scores), max(scores)))
-    for line in best_sollution:
+    for line in best_solution:
         print("{}".format(line))
     plt.show()
