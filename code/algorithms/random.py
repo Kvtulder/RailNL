@@ -3,7 +3,7 @@ from objects.Line import Line
 import random
 import matplotlib.pyplot as plt
 
-def random(num_of_lines, max_duration, num_of_critital_tracks=None):
+def random(stations, tracks, num_of_lines, max_duration, num_of_critital_tracks=None):
     lines = []
 
     for i in range(num_of_lines):
@@ -23,7 +23,7 @@ def random(num_of_lines, max_duration, num_of_critital_tracks=None):
     return score.get_score(lines, tracks, num_of_critital_tracks), lines
 
 
-def random2(num_of_lines, max_duration, num_of_critital_tracks=None):
+def random2(stations, tracks, num_of_lines, max_duration, num_of_critical_tracks=None):
     lines = []
     used_tracks = {}
 
@@ -64,7 +64,7 @@ def random2(num_of_lines, max_duration, num_of_critital_tracks=None):
         lines.append(a)
 
     # create random line
-    return score.get_score(lines, tracks, num_of_critital_tracks), lines
+    return score.get_score(lines, tracks, num_of_critical_tracks), lines
 
 
 def hist(NUM):
@@ -84,7 +84,8 @@ def hist(NUM):
     plt.ylabel("Probability")
     plt.title(f"Random algorithm; N={NUM:d}")
 
-    print("Random algorithm repeated {} times. Average score: {}. Best score: {}".format(NUM, sum(scores) / len(scores), max(scores)))
+    print("Random algorithm repeated {} times. Average score: {}."
+          " Best score: {}".format(NUM, sum(scores) / len(scores), max(scores)))
     for line in best_sollution:
         print("{}".format(line))
     plt.show()
