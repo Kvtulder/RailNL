@@ -39,6 +39,7 @@ def load_stations():
 
     return stations
 
+
 # loads all the tracks form the data in the csv file
 def load_tracks(stations):
 

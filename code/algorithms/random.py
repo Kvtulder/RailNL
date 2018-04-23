@@ -3,7 +3,8 @@ from objects.Line import Line
 import random
 import matplotlib.pyplot as plt
 
-def random(stations, tracks, num_of_lines, max_duration, num_of_critital_tracks=None):
+
+def random1(stations, tracks, num_of_lines, max_duration, num_of_critital_tracks=None):
     lines = []
 
     for i in range(num_of_lines):

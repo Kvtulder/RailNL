@@ -21,10 +21,10 @@ def get_score(lines, tracks, num_of_critical_tracks=None):
             key2 = "{}-{}".format(destination.name, current_station.name)
 
             if key1 in tracks:
-                if key1 not in ridden_tracks:
+                if key1 not in ridden_tracks and tracks[key1].critical:
                     ridden_tracks.update({key1: tracks[key1]})
             elif key2 in tracks:
-                if key2 not in ridden_tracks:
+                if key2 not in ridden_tracks and tracks[key2].critical:
                     ridden_tracks.update({key2: tracks[key2]})
 
     percentage = len(ridden_tracks) / num_of_critical_tracks
