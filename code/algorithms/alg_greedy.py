@@ -83,7 +83,7 @@ def stations_short_con(stations, number):
     sorted_stations = []
 
     for key, station in stations.items():
-        routes.append([station, shortest_station(station).duration])
+        routes.append([station, shortest_connection(station.connections).duration])
 
     routes = sorted(routes, key=lambda route: route[1])
 
