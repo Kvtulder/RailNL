@@ -1,5 +1,3 @@
-import score
-from objects.Line import Line
 import random
 import matplotlib.pyplot as plt
 
@@ -7,7 +5,7 @@ import matplotlib.pyplot as plt
 # creates a random solution with two constrains: n tracks with a max duration of
 # n minutes and all the stations need to be connected. Returns the score and
 # the generated lines
-def random1(stations, tracks, num_of_lines, max_duration, num_of_critital_tracks=None):
+def random1(stations, tracks, num_of_lines, max_duration, num_critital=None):
     lines = []
 
     for i in range(num_of_lines):
@@ -24,12 +22,12 @@ def random1(stations, tracks, num_of_lines, max_duration, num_of_critital_tracks
         lines.append(a)
 
     # create random line
-    return score.get_score(lines, tracks, num_of_critital_tracks), lines
+    return score.get_score(lines, tracks, num_critital), lines
 
 
 # same as random1 but with a extra constraint: A line can't go backwards over
 # the same track.
-def random2(stations, tracks, num_of_lines, max_duration, num_of_critical_tracks=None):
+def random2(stations, tracks, num_of_lines, max_duration, num_critical=None):
     lines = []
     used_tracks = {}
 
@@ -70,7 +68,7 @@ def random2(stations, tracks, num_of_lines, max_duration, num_of_critical_tracks
         lines.append(a)
 
     # create random line
-    return score.get_score(lines, tracks, num_of_critical_tracks), lines
+    return score.get_score(lines, tracks, num_critical), lines
 
 
 def hist(NUM):

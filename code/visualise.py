@@ -1,4 +1,5 @@
 from mpl_toolkits.basemap import Basemap
+import matplotlib.patches as mpatches
 import matplotlib.pyplot as plt
 
 
@@ -54,7 +55,13 @@ def draw_map(stations, tracks, map_boundaries=map_netherlands):
 
     # plot the stations as points
     x, y = my_map(long, lat)
-    plt.plot(x, y, 'ro', markersize=4, label="Kritieke stations")
+    plt.plot(x, y, 'ro', markersize=4,)
     x, y = my_map(longcritical, latcritical)
-    plt.plot(x, y, 'bo', markersize=4, label="Niet-kritieke stations")
+    plt.plot(x, y, 'bo', markersize=4)
+
+    track_patch = mpatches.Patch(color='grey', label='Tracks')
+    station_patch = mpatches.Patch(color='red', label='Station')
+    critical_patch = mpatches.Patch(color='blue', label='Critical station')
+
+    plt.legend(handles=[track_patch, station_patch, critical_patch])
     plt.show()
