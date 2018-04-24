@@ -1,3 +1,7 @@
+
+import score
+from load import *
+from objects.Line import Line
 import random
 import matplotlib.pyplot as plt
 
