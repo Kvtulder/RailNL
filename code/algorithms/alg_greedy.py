@@ -3,7 +3,7 @@ from objects.Line import Line
 
 
 # creates a greedy solution with two constrains: n tracks with a max duration of
-# n minutes and all the stations need to be connected. Returns the generated lines
+# n minutes and all the stations need to be connected. Returns the generated lines and score.
 def greedy1(stations, tracks, num_of_lines, max_duration, num_of_critital_tracks=None):
     lines = []
 
@@ -13,7 +13,7 @@ def greedy1(stations, tracks, num_of_lines, max_duration, num_of_critital_tracks
     for station in start_stations:
         route = Line([station])
         while route.get_total_time() <= max_duration:
-            station = shortest_station(station).destination
+            station = shortest_connection(station.connections).destination
             route.add_station(station)
 
         route.remove_last_station()
@@ -21,7 +21,7 @@ def greedy1(stations, tracks, num_of_lines, max_duration, num_of_critital_tracks
 
     return get_score(lines, tracks), lines
 
-
+# similar to greedy1 but with an extra constraint: line cant travel back to previously traveled track
 def greedy2(stations, tracks, num_of_lines, max_duration, num_of_critital_tracks=None):
     lines = []
 
@@ -31,31 +31,26 @@ def greedy2(stations, tracks, num_of_lines, max_duration, num_of_critital_tracks
     for station in start_stations:
         used_tracks = []
 
-        temp_station = station
         route = Line([station])
 
         while (route.get_total_time() <= max_duration):
-            connection_list = []
-
             station = route.stations[-1]
-
-            for key, connection in station.connections.items():
-                connection_list.append(connection)
+            connections = {**station.connections}
 
             while True:
                 # choose a random destination
-                track = shortest_connection(connection_list)
+                track = shortest_connection(connections)
 
                 if track not in used_tracks:
                     # track to the destination isnt already used: ready to go!
                     used_tracks.append(track)
                     break
-                elif len(connection_list) == 1:
+                elif len(connections) == 1:
                     # track is already used but no other possibility
                     break
                 else:
                     # track is already used: try again
-                    connection_list.remove(track)
+                    del(connections[track.destination.name])
 
             route.add_station(track.destination)
 
@@ -64,24 +59,12 @@ def greedy2(stations, tracks, num_of_lines, max_duration, num_of_critital_tracks
 
     return get_score(lines, tracks), lines
 
-# calculates for provided station, the shortest neighbouring connection
-def shortest_station(station):
-    lowest_time_con = 0
-
-    for key, track in station.connections.items():
-        if lowest_time_con:
-            if lowest_time_con.duration > track.duration:
-                lowest_time_con = track
-        else:
-            lowest_time_con = track
-
-    return lowest_time_con
 
 # calculates which of connections has the shortest duration
 def shortest_connection(connections):
     lowest_time_con = 0
 
-    for connection in connections:
+    for key, connection in connections.items():
         if lowest_time_con:
             if lowest_time_con.duration > connection.duration:
                 lowest_time_con = connection
@@ -89,6 +72,7 @@ def shortest_connection(connections):
             lowest_time_con = connection
 
     return lowest_time_con
+
 
 # creates a list of stations sorted by their shortest connection to a neighbouring station
 def stations_short_con(stations, number):
