@@ -71,7 +71,7 @@ def depth_search(station, line, max_duration, tracks, used_tracks=[]):
             temp_line.remove_last_station()
             lines.append(temp_line)
 
-            return get_score_used(lines, tracks, used_tracks), cur_line
+            return get_score(lines, tracks, used_tracks), cur_line
         else:
 
             cur_line.append(connection.destination)
