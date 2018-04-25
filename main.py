@@ -20,7 +20,7 @@ def print_results(algorithm, results):
     print("Score: :", results[0])
 
 def run(algorithm, stations, tracks):
-    num_of_lines = 7
+    num_of_lines = 22
     max_duration = 120
 
     results = algorithm(stations, tracks,num_of_lines, max_duration)
@@ -29,17 +29,18 @@ def run(algorithm, stations, tracks):
 
 # runs algorithms and logs results
 def main():
-    stations_file = "StationsHolland.csv"
-    tracks_file = "ConnectiesHolland.csv"
+    stations_file = "StationsNationaal.csv"
+    tracks_file = "ConnectiesNationaal.csv"
 
-    stations = load_stations(stations_file)
+    stations = load_stations(stations_file, tracks_file)
     tracks = load_tracks(tracks_file, stations)
+
 
     run(greedy2, stations, tracks)
 
     run(random2, stations, tracks)
 
-    run(depth_first1, stations, tracks)
+    run(depth_first2, stations, tracks)
 
 
 if __name__ == "__main__":
