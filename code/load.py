@@ -4,14 +4,10 @@ from objects.Station import Station
 from objects.Track import Track
 
 
-# define constants
-FILE_NAME_STATIONS = "./data/StationsHolland.csv"
-FILE_NAME_TRACKS = "./data/ConnectiesHolland.csv"
-
-
 # loads all the stations form the data in the csv file
-def load_stations(station_file):
+def load_stations(station_file, track_file):
     station_file = "./data/" + station_file
+    track_file = "./data/" + track_file
 
     stations = {}
 
@@ -28,7 +24,7 @@ def load_stations(station_file):
                     row[0]: Station(row[0], row[1], row[2], False)})
 
     # add all the connections to the stations
-    with open(FILE_NAME_TRACKS) as file:
+    with open(track_file) as file:
         reader = csv.reader(file)
         for row in reader:
 
@@ -47,7 +43,7 @@ def load_tracks(track_file, stations):
 
     tracks = {}
 
-    with open(FILE_NAME_TRACKS) as file:
+    with open(track_file) as file:
         reader = csv.reader(file)
 
         for row in reader:
