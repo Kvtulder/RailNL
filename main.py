@@ -9,6 +9,7 @@ sys.path.append(os.path.join(directory, "code", "algorithms"))
 from load import *
 from alg_greedy import *
 from alg_random import *
+from alg_depth_first import *
 
 # prints tracks and total time
 def print_results(algorithm, results):
@@ -37,6 +38,8 @@ def main():
     run(greedy2, stations, tracks)
 
     run(random2, stations, tracks)
+
+    run(depth_first1, stations, tracks)
 
 
 if __name__ == "__main__":
