@@ -4,6 +4,9 @@ def get_score(lines, tracks, used_tracks=[]):
     # REMOVED THIS FROM FUNCTION PARAMETER WAS UNUSED
     num_of_critical_tracks = 0
 
+    if not isinstance(lines, list):
+        lines = [lines]
+
     if not num_of_critical_tracks:
         num_of_critical_tracks = get_num_of_critical_tracks(tracks)
 
