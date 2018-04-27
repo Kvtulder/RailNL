@@ -35,12 +35,11 @@ def main():
     stations = load_stations(stations_file, tracks_file)
     tracks = load_tracks(tracks_file, stations)
 
-
     run(greedy2, stations, tracks)
 
     run(random2, stations, tracks)
 
-    run(depth_first2, stations, tracks)
+    run(depth_first3, stations, tracks)
 
 
 if __name__ == "__main__":
