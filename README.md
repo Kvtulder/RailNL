@@ -19,8 +19,7 @@ pip install -r requirements.txt
 ## Structuur (Structure)
 Alle Python scripts staan in de folder Code. In de map Data zitten alle input waardes.
 ## Test (Testing)
-Op dit moment is de code nog niet klaar om te testen :-( 
-In de week van 21 april wordt dit toegevoegd!
+In main.py worden de algorithmes gerund en de resultaten weergegeven. Sommige algorithmes, zoals depth_first, hebben een hoge runtime, dus zullen meer tijd nodig hebben!
 
 ## Auteurs (Authors)
 * Kasper van Tulder
