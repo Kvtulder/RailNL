@@ -26,13 +26,16 @@ def load_stations(station_file, track_file):
     # add all the connections to the stations
     with open(track_file) as file:
         reader = csv.reader(file)
-        for row in reader:
 
+        id = 0
+        for row in reader:
             station = stations.get(row[0])
             destination = stations.get(row[1])
             critical = station.critical or destination.critical
-            station.add_connection(Track(destination, row[2], critical))
-            destination.add_connection(Track(station, row[2], critical))
+            station.add_connection(Track(destination, row[2], critical, id))
+            destination.add_connection(Track(station, row[2], critical, id))
+
+            id = id + 1
 
     return stations
 
@@ -46,12 +49,16 @@ def load_tracks(track_file, stations):
     with open(track_file) as file:
         reader = csv.reader(file)
 
+        id = 0
+
         for row in reader:
             station = stations[row[0]]
             destination = stations[row[1]]
             critical = station.critical or destination.critical
             key = "{}-{}".format(row[0], row[1])
 
-            tracks.update({key : Track(destination, row[2], critical, station)})
+            tracks.update({key : Track(destination, row[2], critical, id, station)})
+
+            id = id + 1
 
     return tracks
