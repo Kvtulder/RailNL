@@ -5,6 +5,9 @@ sys.path.append(os.path.join(directory, "code"))
 sys.path.append(os.path.join(directory, "data"))
 sys.path.append(os.path.join(directory, "code", "objects"))
 sys.path.append(os.path.join(directory, "code", "algorithms"))
+sys.path.append(os.path.join(directory, "code", "data_load"))
+sys.path.append(os.path.join(directory, "code", "score"))
+sys.path.append(os.path.join(directory, "code", "visualise"))
 
 from load import *
 from alg_greedy import *
@@ -44,5 +47,4 @@ def main():
 
 if __name__ == "__main__":
     main()
-
 
