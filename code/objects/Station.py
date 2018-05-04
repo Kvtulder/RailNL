@@ -12,4 +12,4 @@ class Station:
             return self.name
 
     def add_connection(self, track):
-        self.connections.update({track.destination.name: track})
+        self.connections.update({track.key: track})

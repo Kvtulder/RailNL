@@ -33,7 +33,7 @@ def greedy2(stations, tracks, num_of_lines, max_duration, num_of_critital_tracks
 
         route = Line([station])
 
-        while (route.get_total_time() <= max_duration):
+        while route.get_total_time() <= max_duration:
             station = route.stations[-1]
             connections = {**station.connections}
 
