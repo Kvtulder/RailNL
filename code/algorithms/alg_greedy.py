@@ -1,5 +1,6 @@
 from score import *
-from objects.Line import Line
+from Line import Line
+from Environment import Environment
 
 
 # creates a greedy solution with two constrains: n tracks with a max duration of

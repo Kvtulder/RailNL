@@ -8,11 +8,13 @@ sys.path.append(os.path.join(directory, "code", "algorithms"))
 sys.path.append(os.path.join(directory, "code", "data_load"))
 sys.path.append(os.path.join(directory, "code", "score"))
 sys.path.append(os.path.join(directory, "code", "visualise"))
+sys.path.append(os.path.join(directory, "code", "algorithms", "helper"))
 
 from load import *
 from alg_greedy import *
-from alg_random import *
-from alg_depth_first import *
+from alg_prims import prim
+from alg_random import random1
+from alg_depth_first import depth_first
 
 # prints tracks and total time
 def print_results(algorithm, results):
@@ -38,11 +40,11 @@ def main():
     stations = load_stations(stations_file, tracks_file)
     tracks = load_tracks(tracks_file, stations)
 
-    run(greedy2, stations, tracks)
+    run(prim, stations, tracks)
 
-    run(random2, stations, tracks)
+    run(random1, stations, tracks)
 
-    run(depth_first3, stations, tracks)
+    run(depth_first, stations, tracks)
 
 
 if __name__ == "__main__":

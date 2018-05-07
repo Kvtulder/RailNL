@@ -10,7 +10,7 @@ def get_score(lines, tracks, used_tracks=[]):
         lines = [lines]
 
     if not num_of_critical_tracks:
-        num_of_critical_tracks = get_num_of_critical_tracks(tracks)
+        num_of_critical_tracks = num_crit_tracks(tracks)
 
     ridden_tracks = {}
     total_time = 0
@@ -44,8 +44,24 @@ def get_score(lines, tracks, used_tracks=[]):
     return score
 
 
+def score_track(track, tracks):
+
+    crit_points = points_per_crit_track(tracks)
+
+    if track.critical:
+        score = crit_points - (track.duration/10)
+    else:
+        score = - (track.duration/10)
+    return score
+
+
+def points_per_crit_track(tracks):
+    number = num_crit_tracks(tracks)
+
+    return (1/number) * 10000
+
 # gets number of tracks that are critical
-def get_num_of_critical_tracks(tracks):
+def num_crit_tracks(tracks):
     num_of_critical_tracks = 0
 
     # separate critical from non-critical

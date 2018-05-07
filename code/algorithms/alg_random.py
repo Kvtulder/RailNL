@@ -1,44 +1,21 @@
-
 import score
-from load import *
-from objects.Line import Line
+import Line
 import random
-import matplotlib.pyplot as plt
+import histogram
 
 
-# creates a random solution with two constrains: n tracks with a max duration of
-# n minutes and all the stations need to be connected. Returns the score and
-# the generated lines
-def random1(stations, tracks, num_of_lines, max_duration, num_critital=None):
-    lines = []
-
-    for i in range(num_of_lines):
-        start = random.choice(list(stations))
-        a = Line([stations[start]])
-
-        while a.total_time < max_duration:
-            connections = a.stations[-1].connections
-            destination = random.choice(list(connections))
-
-            a.add_station(stations[destination])
-
-        a.remove_last_station()
-        lines.append(a)
-
-    # create random line
-    return score.get_score(lines, tracks), lines
-
-
-# same as random1 but with a extra constraint: A line can't go backwards over
-# the same track.
-def random2(stations, tracks, num_of_lines, max_duration, num_critical=None):
+# creates a random solution with three constrains: n tracks with a max duration of
+# n minutes, all the stations need to be connected and a line can't go backwards over
+# # the same track.
+# Returns the score and the generated lines
+def random1(stations, tracks, num_of_lines, max_duration):
     lines = []
     used_tracks = {}
 
     for i in range(num_of_lines):
         # choose a random start position
         start = random.choice(list(stations))
-        a = Line([stations[start]])
+        a = Line.Line([stations[start]])
 
         while a.total_time < max_duration:
             station = a.stations[-1]
@@ -75,25 +52,3 @@ def random2(stations, tracks, num_of_lines, max_duration, num_critical=None):
     return score.get_score(lines, tracks), lines
 
 
-def hist(NUM):
-
-    best_score = 0
-    best_solution = None
-
-    num_of_critical_tracks = score.get_num_of_critical_tracks(tracks)
-    scores = []
-    for i in range(NUM):
-        test, lines = random2(7, 120, num_of_critical_tracks)
-        scores.append(test)
-        if test > best_score:
-            best_solution = lines
-    plt.hist(scores, 30, normed=1)
-    plt.xlabel("Score")
-    plt.ylabel("Probability")
-    plt.title(f"Random algorithm; N={NUM:d}")
-
-    print("Random algorithm repeated {} times. Average score: {}."
-          " Best score: {}".format(NUM, sum(scores) / len(scores), max(scores)))
-    for line in best_solution:
-        print("{}".format(line))
-    plt.show()
