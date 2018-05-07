@@ -1,3 +1,5 @@
+import bin.environment
+
 # gets score based on amount of critical tracks ridden, lines and time used
 # but also checks for previously used tracks so it doesnt award points for covering them
 def get_score(lines, tracks, used_tracks=[]):
@@ -8,7 +10,7 @@ def get_score(lines, tracks, used_tracks=[]):
         lines = [lines]
 
     if not num_of_critical_tracks:
-        num_of_critical_tracks = get_num_of_critical_tracks(tracks)
+        num_of_critical_tracks = bin.environment.get_num_of_critical_tracks()
 
     ridden_tracks = {}
     total_time = 0
@@ -40,15 +42,3 @@ def get_score(lines, tracks, used_tracks=[]):
     score = percentage * 10000 - trains * 20 - (total_time / 10)
 
     return score
-
-
-# gets number of tracks that are critical
-def get_num_of_critical_tracks(tracks):
-    num_of_critical_tracks = 0
-
-    # separate critical from non-critical
-    for key in tracks:
-        if tracks[key].critical:
-            num_of_critical_tracks += 1
-
-    return num_of_critical_tracks
