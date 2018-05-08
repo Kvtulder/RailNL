@@ -68,9 +68,9 @@ def draw_map(map_boundaries=map_netherlands, lines=[]):
 
     # plot the stations as points
     x, y = my_map(long, lat)
-    plt.plot(x, y, 'ro', markersize=4,)
+    plt.plot(x, y, 'bo', markersize=4,)
     x, y = my_map(longcritical, latcritical)
-    plt.plot(x, y, 'bo', markersize=4)
+    plt.plot(x, y, 'ro', markersize=4)
 
     # draw the lines:
     for i in range(len(lines)):
@@ -80,7 +80,7 @@ def draw_map(map_boundaries=map_netherlands, lines=[]):
             line_x, line_y = my_map(station.longitude, station.latitude)
             lines_x.append(line_x)
             lines_y.append(line_y)
-        plt.plot(lines_x, lines_y, '-')
+        plt.plot(lines_x, lines_y, '-', linewidth=3.0)
 
 
 
@@ -89,6 +89,6 @@ def draw_map(map_boundaries=map_netherlands, lines=[]):
     critical_patch = mpatches.Patch(color='red', label='Critical station')
 
 
-    plt.legend(handles=[track_patch, station_patch, critical_patch])
+    plt.legend(handles=[track_patch, critical_patch, station_patch])
 
     plt.show()

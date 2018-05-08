@@ -12,17 +12,17 @@ stations = {}
 num_of_critical = None
 
 
-def set_holland():
+def set_holland(all_critical=False):
     set_custom_data("../data/StationsHolland.csv",
-                    "../data/ConnectiesHolland.csv")
+                    "../data/ConnectiesHolland.csv", all_critical)
 
 
-def set_national():
+def set_national(all_critical=False):
     set_custom_data("../data/StationsNationaal.csv",
-                    "../data/ConnectiesNationaal.csv")
+                    "../data/ConnectiesNationaal.csv", all_critical)
 
 
-def set_custom_data(station, track):
+def set_custom_data(station, track, all_critical=False):
     global station_file
     global track_file
     global tracks
@@ -35,7 +35,7 @@ def set_custom_data(station, track):
     # reload with new data
     station_file = station
     track_file = track
-    load()
+    load(all_critical)
 
 
 def get_stations():
@@ -72,7 +72,7 @@ def get_track(station_a, station_b):
         raise ValueError("No track found")
 
 
-def load():
+def load(all_critical=False):
     print("loading stations and tracks...", end='', flush=True)
     # add all stations
     with open(station_file) as file:
@@ -82,10 +82,10 @@ def load():
             if len(row) > 3:
                 stations.update({
                     row[0]: Station(row[0], row[1], row[2],
-                                    row[3] == 'Kritiek')})
+                                    row[3] == 'Kritiek' or all_critical)})
             else:
                 stations.update({
-                    row[0]: Station(row[0], row[1], row[2], False)})
+                    row[0]: Station(row[0], row[1], row[2], all_critical)})
 
     # add all tracks
     with open(track_file) as file:
