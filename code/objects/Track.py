@@ -12,5 +12,7 @@ class Track:
         elif self.destination == station:
             return self.start
         else:
-            raise ValueError("Station does not match start or destination")
+            raise ValueError(
+                "Error in get_other_station: {} does not match {} or {}"
+                .format(station.name, self.start.name, self.destination.name))
 

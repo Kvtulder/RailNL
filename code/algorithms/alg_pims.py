@@ -1,6 +1,7 @@
 from score import *
 from Line import *
 import copy
+import bin.environment
 
 
 def pim(stations, tracks, num_of_lines, max_duration):
@@ -10,7 +11,7 @@ def pim(stations, tracks, num_of_lines, max_duration):
 
     local_stations = copy.copy(stations)
 
-    num_of_crit = get_num_of_critical_tracks(tracks)
+    num_of_crit = bin.environment.get_num_of_tracks()
 
     points_crit_track = (1/num_of_crit) * 10000
 

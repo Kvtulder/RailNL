@@ -1,26 +1,33 @@
 import matplotlib.pyplot as plt
+import matplotlib.mlab as mlab
+import numpy
+
 
 # draws histogram based on num(ber) of runs
-def hist(given_function, num, stations, tracks, num_of_lines, max_duration):
-
+def hist(NUM, algorithm):
     best_score = 0
     best_solution = None
-
     scores = []
-    for i in range(num):
-        test, lines = given_function(stations, tracks, num_of_lines, max_duration)
+
+    for i in range(NUM):
+        test, lines = algorithm(7, 120)
         scores.append(test)
         if test > best_score:
             best_solution = lines
 
-        print(len(scores))
-    plt.hist(scores, 30, normed=1)
+    standard_deviation = numpy.std(scores)
+    average = sum(scores) / len(scores)
+
+    n, bins, patches = plt.hist(scores, 30, normed=1)
+    normalfit = mlab.normpdf(bins, average, standard_deviation)
+    plt.plot(bins, normalfit, 'r')
     plt.xlabel("Score")
     plt.ylabel("Probability")
-    plt.title(f"given_function.__name__ algorithm; N={num:d}")
+    plt.title(
+        f"Random algorithm; N={NUM:d}; $\mu$={average:f} $\sigma$={standard_deviation:f}")
 
-    print("{} algorithm repeated {} times. Average score: {}."
-          " Best score: {}".format(given_function.__name__, num, sum(scores) / len(scores), max(scores)))
+    print("Random algorithm repeated {} times. Average score: {}."
+          " Best score: {}".format(NUM, average, max(scores)))
     for line in best_solution:
         print("{}".format(line))
     plt.show()

@@ -1,12 +1,7 @@
-import score
+from score.score import get_score
 from objects.Line import Line
 import random
 import bin.environment
-import matplotlib.pyplot as plt
-import matplotlib.mlab as mlab
-import numpy
-
-
 
 # creates a random solution with two constrains: n tracks with a max duration of
 # n minutes and all the stations need to be connected. Returns the score and
@@ -40,9 +35,9 @@ def random2(num_of_lines, max_duration):
     stations = bin.environment.get_stations()
     tracks = bin.environment.get_tracks()
     lines = []
-    used_tracks = {}
 
     for i in range(num_of_lines):
+        used_tracks = {}
         # choose a random start position
         start = random.choice(list(stations))
         a = Line([stations[start]])
@@ -79,33 +74,4 @@ def random2(num_of_lines, max_duration):
         lines.append(a)
 
     # create random line
-    return score.get_score(lines, tracks), lines
-
-
-def hist(NUM, algorithm):
-    best_score = 0
-    best_solution = None
-    scores = []
-
-    for i in range(NUM):
-        test, lines = algorithm(7, 120)
-        scores.append(test)
-        if test > best_score:
-            best_solution = lines
-
-    standard_deviation = numpy.std(scores)
-    average = sum(scores) / len(scores)
-
-    n, bins, patches = plt.hist(scores, 30, normed=1)
-    normalfit = mlab.normpdf(bins, average, standard_deviation)
-    plt.plot(bins, normalfit, 'r')
-    plt.xlabel("Score")
-    plt.ylabel("Probability")
-    plt.title(
-        f"Random algorithm; N={NUM:d}; $\mu$={average:f} $\sigma$={standard_deviation:f}")
-
-    print("Random algorithm repeated {} times. Average score: {}."
-          " Best score: {}".format(NUM, average, max(scores)))
-    for line in best_solution:
-        print("{}".format(line))
-    plt.show()
+    return get_score(lines), lines

@@ -2,15 +2,40 @@ import csv
 from objects.Station import Station
 from objects.Track import Track
 
-# define path files
+# define default path files
 station_file = "../data/StationsNationaal.csv"
 track_file = "../data/ConnectiesNationaal.csv"
 
-# create static variables:
+# create variables:
 tracks = {}
 stations = {}
-
 num_of_critical = None
+
+
+def set_holland():
+    set_custom_data("../data/StationsHolland.csv",
+                    "../data/ConnectiesHolland.csv")
+
+
+def set_national():
+    set_custom_data("../data/StationsNationaal.csv",
+                    "../data/ConnectiesNationaal.csv")
+
+
+def set_custom_data(station, track):
+    global station_file
+    global track_file
+    global tracks
+    global stations
+
+    # reset all stations
+    stations = {}
+    tracks = {}
+
+    # reload with new data
+    station_file = station
+    track_file = track
+    load()
 
 
 def get_stations():
@@ -48,7 +73,7 @@ def get_track(station_a, station_b):
 
 
 def load():
-    print("loading stations and tracks...")
+    print("loading stations and tracks...", end='', flush=True)
     # add all stations
     with open(station_file) as file:
         reader = csv.reader(file)
@@ -77,6 +102,8 @@ def load():
 
             start.add_connection(track)
             destination.add_connection(track)
+
+    print("\t\t DONE")
 
 
 # gets number of tracks that are critical
