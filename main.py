@@ -8,43 +8,18 @@ sys.path.append(os.path.join(directory, "code", "algorithms"))
 sys.path.append(os.path.join(directory, "code", "data_load"))
 sys.path.append(os.path.join(directory, "code", "score"))
 sys.path.append(os.path.join(directory, "code", "visualise"))
+sys.path.append(os.path.join(directory, "code", "bin"))
+sys.path.append(os.path.join(directory, "code", "algorithms", "helper"))
 
-from load import *
-from alg_greedy import *
-from alg_random import *
-from alg_depth_first import *
-
-# prints tracks and total time
-def print_results(algorithm, results):
-    print("\n")
-    print(algorithm.__name__)
-    for result in results[1]:
-        print("{}".format(result))
-    print("Score: :", results[0])
-
-def run(algorithm, stations, tracks):
-    num_of_lines = 22
-    max_duration = 120
-
-    results = algorithm(stations, tracks,num_of_lines, max_duration)
-
-    print_results(algorithm, results)
-
-# runs algorithms and logs results
-def main():
-    stations_file = "StationsNationaal.csv"
-    tracks_file = "ConnectiesNationaal.csv"
-
-    stations = load_stations(stations_file, tracks_file)
-    tracks = load_tracks(tracks_file, stations)
-
-    run(greedy2, stations, tracks)
-
-    run(random2, stations, tracks)
-
-    run(depth_first3, stations, tracks)
+import print_results
+from alg_recalc_greedy import recalculating_greedy
+from alg_random import random2
+from alg_hill_climber import hill_climber_random
 
 
-if __name__ == "__main__":
-    main()
+results = recalculating_greedy()
 
+print_results.print_results(recalculating_greedy, results)
+results = hill_climber_random(100)
+
+print_results.print_results(random2, results[:2])

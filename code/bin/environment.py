@@ -3,30 +3,44 @@ from objects.Station import Station
 from objects.Track import Track
 
 # define default path files
-station_file = "../data/StationsNationaal.csv"
-track_file = "../data/ConnectiesNationaal.csv"
+station_file = "./data/StationsNationaal.csv"
+track_file = "./data/ConnectiesNationaal.csv"
+
+num_of_lines = 20
+max_duration = 180
 
 # create variables:
 tracks = {}
 stations = {}
+
 num_of_critical = None
+points_per_crit = None
 
 
 def set_holland(all_critical=False):
-    set_custom_data("../data/StationsHolland.csv",
-                    "../data/ConnectiesHolland.csv", all_critical)
+    set_custom_data(7, 120,
+                    "./data/StationsHolland.csv",
+                    "./data/ConnectiesHolland.csv", all_critical)
 
 
 def set_national(all_critical=False):
-    set_custom_data("../data/StationsNationaal.csv",
-                    "../data/ConnectiesNationaal.csv", all_critical)
+    set_custom_data(20, 180,
+                    "./data/StationsNationaal.csv",
+                    "./data/ConnectiesNationaal.csv", all_critical)
 
 
-def set_custom_data(station, track, all_critical=False):
+def set_custom_data(new_num_of_lines, new_duration, station, track, all_critical=False):
     global station_file
     global track_file
     global tracks
     global stations
+    global num_of_lines
+    global max_duration
+
+
+    # change duration and number of lines
+    num_of_lines = new_num_of_lines
+    max_duration = new_duration
 
     # reset all stations
     stations = {}
@@ -54,6 +68,12 @@ def get_num_of_tracks():
     if not num_of_critical:
         get_num_of_critical_tracks()
     return num_of_critical
+
+
+def get_points_per_crit():
+    if not points_per_crit:
+        calculate_points_per_crit()
+    return points_per_crit
 
 
 def get_track(station_a, station_b):
@@ -118,4 +138,16 @@ def get_num_of_critical_tracks():
             num_of_critical += 1
 
     return num_of_critical
+
+
+def calculate_points_per_crit():
+
+    global points_per_crit
+    points_per_crit = 0
+
+    num_of_critical = get_num_of_tracks()
+
+    points_per_crit = (1 / num_of_critical) * 10000
+
+    return points_per_crit
 

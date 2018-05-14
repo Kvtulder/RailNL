@@ -1,12 +1,12 @@
-import bin.environment
+import environment
 
 
 # gets score based on amount of critical tracks ridden, lines and time used
 # but also checks for previously used tracks so it doesnt award points for covering them
 def get_score(lines, used_tracks=[]):
 
-    num_of_critical_tracks = bin.environment.get_num_of_tracks()
-    tracks = bin.environment.get_tracks()
+    num_of_critical_tracks = environment.get_num_of_tracks()
+    tracks = environment.get_tracks()
 
     # make sure the function also works with a sinlge line
     if not isinstance(lines, list):
@@ -41,4 +41,15 @@ def get_score(lines, used_tracks=[]):
     percentage = len(ridden_tracks) / num_of_critical_tracks
     score = percentage * 10000 - trains * 20 - (total_time / 10)
 
+    return score
+
+
+def score_track(track):
+
+    crit_points = environment.get_points_per_crit()
+
+    if track.critical:
+        score = crit_points - (track.duration/10)
+    else:
+        score = - (track.duration/10)
     return score

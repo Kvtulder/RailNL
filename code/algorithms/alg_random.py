@@ -1,15 +1,21 @@
-from score.score import get_score
-from objects.Line import Line
+import score
+from Line import Line
 import random
-import bin.environment
+import environment
 
 
 # creates a random solution with two constrains: n tracks with a max duration of
 # n minutes and all the stations need to be connected. Returns the score and
 # the generated lines
-def random1(num_of_lines, max_duration):
-    stations = bin.environment.get_stations()
-    tracks = bin.environment.get_tracks()
+def random1(num_of_lines=None, max_duration=None):
+    if not num_of_lines:
+        num_of_lines = environment.num_of_lines
+
+    if not max_duration:
+        max_duration = environment.max_duration
+
+    stations = environment.get_stations()
+    tracks = environment.get_tracks()
 
     lines = []
 
@@ -31,10 +37,16 @@ def random1(num_of_lines, max_duration):
 
 # same as random1 but with a extra constraint: A line can't go backwards over
 # the same track.
-def random2(num_of_lines, max_duration):
+def random2(num_of_lines=None, max_duration=None):
+    if not num_of_lines:
+        num_of_lines = environment.num_of_lines
 
-    stations = bin.environment.get_stations()
-    tracks = bin.environment.get_tracks()
+    if not max_duration:
+        max_duration = environment.max_duration
+    
+    stations = environment.get_stations()
+    tracks = environment.get_tracks()
+    
     lines = []
 
     for i in range(num_of_lines):
@@ -75,4 +87,4 @@ def random2(num_of_lines, max_duration):
         lines.append(a)
 
     # create random line
-    return get_score(lines), lines
+    return score.get_score(lines), lines

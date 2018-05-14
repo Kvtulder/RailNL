@@ -1,95 +1,90 @@
-from score import *
-from objects.Line import Line
+import environment
+import helper
+from Line import Line
 
 
-# creates a greedy solution with two constrains: n tracks with a max duration of
-# n minutes and all the stations need to be connected. Returns the generated lines and score.
-def greedy1(stations, tracks, num_of_lines, max_duration, num_of_critital_tracks=None):
-    lines = []
+# pure greedy search algorithm that searches best route from given station
+# it looks to both ends
+# constraints: cant return on itself
+def greedy_search(station, lookup_table_tracks_score):
+    used_connections = []
+    ends = [station]
 
-    start_stations = []
-    start_stations.extend(stations_short_con(stations, num_of_lines))
+    new_line = Line([station])
 
-    for station in start_stations:
-        route = Line([station])
-        while route.get_total_time() <= max_duration:
-            station = shortest_connection(station.connections).destination
-            route.add_station(station)
+    line_completed = False
+    while not line_completed:
+        best_connections_ends = {}
 
-        route.remove_last_station()
-        lines.append(route)
+        # find best connection for each end of route and then select best one
+        for end in ends:
+            connections = {**end.connections}
 
-    return get_score(lines, tracks), lines
+            best_connection_end = helper.select_best_scoring_connection(connections, lookup_table_tracks_score)
 
-# similar to greedy1 but with an extra constraint: line cant travel back to previously traveled track
-def greedy2(stations, tracks, num_of_lines, max_duration, num_of_critital_tracks=None):
-    lines = []
+            while invalid(new_line, best_connection_end, used_connections):
+                del connections[best_connection_end.key]
 
-    start_stations = []
-    start_stations.extend(stations_short_con(stations, num_of_lines))
-
-    for station in start_stations:
-        used_tracks = []
-
-        route = Line([station])
-
-        while route.get_total_time() <= max_duration:
-            station = route.stations[-1]
-            connections = {**station.connections}
-
-            while True:
-                # choose a random destination
-                track = shortest_connection(connections)
-
-                if track not in used_tracks:
-                    # track to the destination isnt already used: ready to go!
-                    used_tracks.append(track)
-                    break
-                elif len(connections) == 1:
-                    # track is already used but no other possibility
+                if len(connections) == 0:
+                    best_connection_end = None
                     break
                 else:
-                    # track is already used: try again
-                    del(connections[track.destination.name])
+                    best_connection_end = helper.select_best_scoring_connection(connections, lookup_table_tracks_score)
 
-            route.add_station(track.destination)
+            best_connections_ends.update({end.name: best_connection_end})
 
-        route.remove_last_station()
-        lines.append(route)
+        best_connection = helper.select_best_scoring_connection(best_connections_ends, lookup_table_tracks_score)
 
-    return get_score(lines, tracks), lines
+        if not best_connection:
+            line_completed = True
+            continue
 
-
-# calculates which of connections has the shortest duration
-def shortest_connection(connections):
-    lowest_time_con = 0
-
-    for key, connection in connections.items():
-        if lowest_time_con:
-            if lowest_time_con.duration > connection.duration:
-                lowest_time_con = connection
+        if best_connection.key in new_line.stations[0].connections:
+            insert_position = "first"
         else:
-            lowest_time_con = connection
+            insert_position = "last"
+        new_line.add_station_by_track(best_connection, insert_position)
 
-    return lowest_time_con
+        used_connections.append(best_connection.key)
 
+        ends = [new_line.stations[0], new_line.stations[-1]]
 
-# creates a list of stations sorted by their shortest connection to a neighbouring station
-def stations_short_con(stations, number):
-    if not isinstance(number, int):
-        raise ValueError("Usage: stations, number (has to be int)")
-
-    routes = []
-    sorted_stations = []
-
-    for key, station in stations.items():
-        routes.append([station, shortest_connection(station.connections).duration])
-
-    routes = sorted(routes, key=lambda route: route[1])
-
-    for route in routes:
-        sorted_stations.append(route[0])
-
-    return sorted_stations[:number]
+    return trim_line(new_line, lookup_table_tracks_score)
 
 
+# trims line so non-scoring tracks on the front or end of track are removed
+def trim_line(line, lookup_table_tracks_score):
+    front_done = False
+    end_done = False
+
+    while not end_done or not front_done:
+        track_front = environment.get_track(line.stations[0], line.stations[1])
+        track_end = environment.get_track(line.stations[-1], line.stations[-2])
+
+        if not end_done:
+            if lookup_table_tracks_score[track_end.key] < 0:
+                line.stations.pop()
+            else:
+                end_done = True
+
+        if not front_done:
+            if lookup_table_tracks_score[track_front.key] < 0:
+                line.stations.remove(line.stations[0])
+            else:
+                front_done = True
+
+        if len(line.stations) < 2:
+            break
+
+    line.total_time = line.get_total_time()
+    return line
+
+
+# checks if route is valid
+def invalid(line, connection, used_connections):
+    max_duration = environment.max_duration
+
+    if connection.key in used_connections or line.total_time + connection.duration > max_duration:
+        return True
+    else:
+        return False
