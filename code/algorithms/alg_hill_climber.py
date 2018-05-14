@@ -1,22 +1,18 @@
 import copy
-from alg_random import random2
-import score
-import environment
+import algorithms as alg
+from score import score
 
 
-stations = environment.get_stations()
-tracks = environment.get_tracks()
 lines = []
 used_tracks = {}
 
 
-def hill_climber_random(steps):
-    num_of_lines = environment.num_of_lines
+def hill_climber_random(steps, data):
 
     print("generating hill climber solution...", end='', flush=True)
 
     # generate random solution
-    solution_score, solution = random2()
+    solution_score, solution = alg.random2(data)
 
     score_evolution = []
 
@@ -24,12 +20,12 @@ def hill_climber_random(steps):
         score_evolution.append(solution_score)
 
         # make mutation
-        for i in range(num_of_lines):
+        for i in range(len(solution)):
 
             new_solution = copy.copy(solution)
-            new_solution[i] = random2(1)[1][0]
+            new_solution[i] = alg.random2(data, 1)[1][0]
 
-            new_score = score.get_score(new_solution)
+            new_score = score.get_score(new_solution, data)
 
             if new_score > solution_score:
                 solution = new_solution

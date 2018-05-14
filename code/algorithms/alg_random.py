@@ -1,8 +1,6 @@
-import score
-from Line import Line
+import objects as obj
+from score import score
 import random
-
-
 
 # creates a random solution with two constrains: n tracks with a max duration of
 # n minutes and all the data.stations need to be connected. Returns the score and
@@ -14,14 +12,11 @@ def random1(data, num_of_lines=None, max_duration=None):
     if not max_duration:
         max_duration = data.max_duration
 
-    data.stations = environment.get_data.stations()
-    tracks = environment.get_tracks()
-
     lines = []
 
     for i in range(num_of_lines):
         start = random.choice(list(data.stations))
-        a = Line([data.stations[start]])
+        a = obj.Line([data.stations[start]])
 
         while a.total_time < max_duration:
             connections = a.stations[-1].connections
@@ -50,7 +45,7 @@ def random2(data, num_of_lines=None, max_duration=None):
         used_tracks = {}
         # choose a random start position
         start = random.choice(list(data.stations))
-        a = Line([data.stations[start]])
+        a = obj.Line([data.stations[start]])
 
         while a.total_time < max_duration:
             station = a.stations[-1]

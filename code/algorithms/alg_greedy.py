@@ -1,16 +1,15 @@
-import environment
-import helper
-from Line import Line
+import objects as obj
+import algorithms.helper.helper as helper
 
 
 # pure greedy search algorithm that searches best route from given station
 # it looks to both ends
 # constraints: cant return on itself
-def greedy_search(station, lookup_table_tracks_score):
+def greedy_search(station, data, lookup_table_tracks_score):
     used_connections = []
     ends = [station]
 
-    new_line = Line([station])
+    new_line = obj.Line([station])
 
     line_completed = False
     while not line_completed:
@@ -22,7 +21,7 @@ def greedy_search(station, lookup_table_tracks_score):
 
             best_connection_end = helper.select_best_scoring_connection(connections, lookup_table_tracks_score)
 
-            while invalid(new_line, best_connection_end, used_connections):
+            while invalid(new_line, best_connection_end, used_connections, data):
                 del connections[best_connection_end.key]
 
                 if len(connections) == 0:
@@ -49,17 +48,17 @@ def greedy_search(station, lookup_table_tracks_score):
 
         ends = [new_line.stations[0], new_line.stations[-1]]
 
-    return trim_line(new_line, lookup_table_tracks_score)
+    return trim_line(new_line, data, lookup_table_tracks_score)
 
 
 # trims line so non-scoring tracks on the front or end of track are removed
-def trim_line(line, lookup_table_tracks_score):
+def trim_line(line, data, lookup_table_tracks_score):
     front_done = False
     end_done = False
 
     while not end_done or not front_done:
-        track_front = environment.get_track(line.stations[0], line.stations[1])
-        track_end = environment.get_track(line.stations[-1], line.stations[-2])
+        track_front = data.get_track(line.stations[0], line.stations[1])
+        track_end = data.get_track(line.stations[-1], line.stations[-2])
 
         if not end_done:
             if lookup_table_tracks_score[track_end.key] < 0:
@@ -81,10 +80,9 @@ def trim_line(line, lookup_table_tracks_score):
 
 
 # checks if route is valid
-def invalid(line, connection, used_connections):
-    max_duration = environment.max_duration
+def invalid(line, connection, used_connections, data):
 
-    if connection.key in used_connections or line.total_time + connection.duration > max_duration:
+    if connection.key in used_connections or line.total_time + connection.duration > data.max_duration:
         return True
     else:
         return False

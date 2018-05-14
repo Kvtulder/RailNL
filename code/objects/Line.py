@@ -1,4 +1,3 @@
-import environment
 
 class Line:
     def __init__(self, stations=[]):
@@ -91,14 +90,14 @@ class Line:
     def get_first_station(self):
         return self.stations[0]
 
-    def get_all_tracks(self):
+    def get_all_tracks(self, data):
         tracks = []
 
         for i in range(len(self.stations) - 1):
             cur_station = self.stations[i]
             next_station = self.stations[i + 1]
 
-            tracks.append(environment.get_track(cur_station, next_station))
+            tracks.append(data.get_track(cur_station, next_station))
 
         return tracks
 

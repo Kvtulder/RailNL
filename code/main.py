@@ -1,25 +1,16 @@
 # added folder structure
-import os, sys
-directory = os.path.dirname(os.path.realpath(__file__))
-sys.path.append(os.path.join(directory, "code"))
-sys.path.append(os.path.join(directory, "data"))
-sys.path.append(os.path.join(directory, "code", "objects"))
-sys.path.append(os.path.join(directory, "code", "algorithms"))
-sys.path.append(os.path.join(directory, "code", "data_load"))
-sys.path.append(os.path.join(directory, "code", "score"))
-sys.path.append(os.path.join(directory, "code", "visualise"))
-sys.path.append(os.path.join(directory, "code", "bin"))
-sys.path.append(os.path.join(directory, "code", "algorithms", "helper"))
 
-import print_results
-from alg_recalc_greedy import recalculating_greedy
-from alg_random import random2
-from alg_hill_climber import hill_climber_random
+import objects as obj
+import algorithms as alg
+import test_tools as tt
+import visualise as vis
 
 
-results = recalculating_greedy()
+data = obj.Data()
 
-print_results.print_results(recalculating_greedy, results)
-results = hill_climber_random(100)
+vis.print_results(alg.hill_climber_random, alg.hill_climber_random(10 ,data))
 
-print_results.print_results(random2, results[:2])
+tt.multiple_runs(100, alg.recalculating_greedy, data)
+tt.multiple_runs(100, alg.random2, data)
+
+
