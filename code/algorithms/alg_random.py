@@ -1,59 +1,56 @@
 import score
 from Line import Line
 import random
-import environment
+
 
 
 # creates a random solution with two constrains: n tracks with a max duration of
-# n minutes and all the stations need to be connected. Returns the score and
+# n minutes and all the data.stations need to be connected. Returns the score and
 # the generated lines
-def random1(num_of_lines=None, max_duration=None):
+def random1(data, num_of_lines=None, max_duration=None):
     if not num_of_lines:
-        num_of_lines = environment.num_of_lines
+        num_of_lines = data.num_of_lines
 
     if not max_duration:
-        max_duration = environment.max_duration
+        max_duration = data.max_duration
 
-    stations = environment.get_stations()
+    data.stations = environment.get_data.stations()
     tracks = environment.get_tracks()
 
     lines = []
 
     for i in range(num_of_lines):
-        start = random.choice(list(stations))
-        a = Line([stations[start]])
+        start = random.choice(list(data.stations))
+        a = Line([data.stations[start]])
 
         while a.total_time < max_duration:
             connections = a.stations[-1].connections
-            track = tracks[random.choice(list(connections))]
+            track = data.tracks[random.choice(list(connections))]
             a.add_station_by_track(track)
 
         a.remove_last_station()
         lines.append(a)
 
     # create random line
-    return score.get_score(lines, tracks), lines
+    return score.get_score(lines, data), lines
 
 
 # same as random1 but with a extra constraint: A line can't go backwards over
 # the same track.
-def random2(num_of_lines=None, max_duration=None):
+def random2(data, num_of_lines=None, max_duration=None):
     if not num_of_lines:
-        num_of_lines = environment.num_of_lines
+        num_of_lines = data.num_of_lines
 
     if not max_duration:
-        max_duration = environment.max_duration
-    
-    stations = environment.get_stations()
-    tracks = environment.get_tracks()
-    
+        max_duration = data.max_duration
+
     lines = []
 
     for i in range(num_of_lines):
         used_tracks = {}
         # choose a random start position
-        start = random.choice(list(stations))
-        a = Line([stations[start]])
+        start = random.choice(list(data.stations))
+        a = Line([data.stations[start]])
 
         while a.total_time < max_duration:
             station = a.stations[-1]
@@ -66,7 +63,7 @@ def random2(num_of_lines=None, max_duration=None):
                 destination = random.choice(list(destinations))
 
                 # add track to list
-                track = tracks[destination]
+                track = data.tracks[destination]
                 key = track.key
 
                 if key not in used_tracks:
@@ -87,4 +84,4 @@ def random2(num_of_lines=None, max_duration=None):
         lines.append(a)
 
     # create random line
-    return score.get_score(lines), lines
+    return score.get_score(lines, data), lines
