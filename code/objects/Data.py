@@ -23,8 +23,8 @@ class Data:
             self.max_duration = 120
             self.num_of_lines = 7
 
-        self.station_file = "./data/Stations" + scope + ".csv"
-        self.track_file = "./data/Connecties" + scope + ".csv"
+        self.station_file = "../data/Stations" + scope + ".csv"
+        self.track_file = "../data/Connecties" + scope + ".csv"
 
         self.load(all_critical)
 
@@ -84,4 +84,13 @@ class Data:
                 num_of_critical += 1
 
         return num_of_critical
+
+    # takes 2d list with variables and their name
+    # creates variables in data
+    def set_test_variables(self, variables):
+        for var in variables:
+            setattr(Data, var[1], var[0])
+
+
+
 
