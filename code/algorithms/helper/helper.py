@@ -31,8 +31,10 @@ def sort_lines_on_score(lines, used_tracks, data):
 
 
 def update_used(new_line, used_tracks, data, lookup_track_scores=None):
-    tracks_of_line = new_line.get_all_tracks(data)
+    if not new_line:
+        return used_tracks
 
+    tracks_of_line = new_line.get_all_tracks(data)
     for track in tracks_of_line:
         if track.key not in used_tracks:
             if track.critical:
@@ -70,7 +72,7 @@ def lookup_score(data):
 def update_lookup(track, data, look_up):
     look_up[track.key] = look_up[track.key] - data.points_per_crit
 
-def lookup_score2(data):
+def lookup_score_time(data):
     lookup_tracks_score = {}
 
 
