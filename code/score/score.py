@@ -11,6 +11,8 @@ def get_score(lines, data, used_tracks=[]):
 
     # calculate the amount of ridden critical tracks and total time
     for line in lines:
+        if not line:
+            continue
 
         # update time
         total_time += line.get_total_time()
