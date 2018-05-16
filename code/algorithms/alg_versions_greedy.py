@@ -1,9 +1,12 @@
 from score import score
+import algorithms.greedy_helper as gh
 import algorithms.helper.helper as helper
 import algorithms as alg
 
 
-def recalculating_greedy(data, num_of_lines=None):
+# calculates best route for all station and selects best one
+# removes score from used tracks and recalculates new best route
+def recalculating_greedy(data, invalid_function=gh.invalid, num_of_lines=None):
 
     if not num_of_lines:
         num_of_lines = data.num_of_lines
@@ -14,21 +17,34 @@ def recalculating_greedy(data, num_of_lines=None):
     best_lines = []
 
     # create lookup table for tracks with their score
-    lookup_table_tracks_score = helper.lookup_score2(data)
+    lookup_table_tracks_score = helper.lookup_score(data)
 
     while len(used_tracks) < num_crit_tracks and len(best_lines) != num_of_lines:
         lines = []
 
         # create a line from each station
         for key, station in data.stations.items():
-            lines.append(alg.greedy_search(station, data, lookup_table_tracks_score))
+            best_station_line = alg.greedy_search(station, data, lookup_table_tracks_score, invalid_function)
+            lines.append(best_station_line)
 
         best_line = helper.select_best_lines(lines, used_tracks, data, 1)
-        used_tracks = helper.update_used(best_line, used_tracks, data, lookup_table_tracks_score)
 
-        best_lines.append(best_line)
+        if best_line:
+            used_tracks = helper.update_used(best_line, used_tracks, data, lookup_table_tracks_score)
+            best_lines.append(best_line)
+
 
     return score.get_score(best_lines, data), best_lines
+
+
+
+
+
+
+
+
+
+
 
 
 

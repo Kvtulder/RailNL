@@ -1,11 +1,12 @@
 import objects as obj
 import algorithms.helper.helper as helper
+import algorithms.greedy_helper as gh
 
 
 # pure greedy search algorithm that searches best route from given station
 # it looks to both ends
 # constraints: cant return on itself
-def greedy_search(station, data, lookup_table_tracks_score):
+def greedy_search(station, data, lookup_table_tracks_score, invalid_function):
     used_connections = []
     ends = [station]
 
@@ -21,7 +22,7 @@ def greedy_search(station, data, lookup_table_tracks_score):
 
             best_connection_end = helper.select_best_scoring_connection(connections, lookup_table_tracks_score)
 
-            while invalid(new_line, best_connection_end, used_connections, data):
+            while invalid_function(new_line, best_connection_end, used_connections, data):
                 del connections[best_connection_end.key]
 
                 if len(connections) == 0:
@@ -48,7 +49,9 @@ def greedy_search(station, data, lookup_table_tracks_score):
 
         ends = [new_line.stations[0], new_line.stations[-1]]
 
-    return trim_line(new_line, data, lookup_table_tracks_score)
+    best_line = trim_line(new_line, data, lookup_table_tracks_score)
+
+    return best_line
 
 
 # trims line so non-scoring tracks on the front or end of track are removed
@@ -56,18 +59,21 @@ def trim_line(line, data, lookup_table_tracks_score):
     front_done = False
     end_done = False
 
+    if len(line.stations) < 2:
+        return line
+
     while not end_done or not front_done:
         track_front = data.get_track(line.stations[0], line.stations[1])
         track_end = data.get_track(line.stations[-1], line.stations[-2])
 
         if not end_done:
-            if lookup_table_tracks_score[track_end.key] < 0:
+            if lookup_table_tracks_score[track_end.key] < 0.5 * data.points_per_crit:
                 line.stations.pop()
             else:
                 end_done = True
 
         if not front_done:
-            if lookup_table_tracks_score[track_front.key] < 0:
+            if lookup_table_tracks_score[track_front.key] < 0.5 * data.points_per_crit:
                 line.stations.remove(line.stations[0])
             else:
                 front_done = True
@@ -79,10 +85,3 @@ def trim_line(line, data, lookup_table_tracks_score):
     return line
 
 
-# checks if route is valid
-def invalid(line, connection, used_connections, data):
-
-    if connection.key in used_connections or line.total_time + connection.duration > data.max_duration:
-        return True
-    else:
-        return False
