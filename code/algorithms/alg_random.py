@@ -26,7 +26,7 @@ def random1(num_of_lines, max_duration):
         lines.append(a)
 
     # create random line
-    return score.get_score(lines, tracks), lines
+    return get_score(lines, tracks), lines
 
 
 # same as random1 but with a extra constraint: A line can't go backwards over
