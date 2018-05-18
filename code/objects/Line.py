@@ -1,3 +1,4 @@
+
 class Line:
     def __init__(self, stations=[]):
         self.stations = stations
@@ -15,9 +16,13 @@ class Line:
             return message
 
     # Adds a new station to the list
-    def add_station_by_track(self, track):
+    def add_station_by_track(self, track, side="last"):
 
-        station = self.get_last_station()
+        if side == "first":
+            station = self.get_first_station()
+        else:
+            station = self.get_last_station()
+
         destination = track.get_other_station(station)
 
         # check if first station, if not: check if they're connected
@@ -26,7 +31,11 @@ class Line:
             return
 
         if track.key in station.connections:
-            self.stations.append(destination)
+            if side == "first":
+                self.stations.insert(0, destination)
+            elif side == "last":
+                self.stations.append(destination)
+
             self.total_time += float(track.duration)
         else:
             raise StationNotConnectedError(
@@ -77,6 +86,20 @@ class Line:
 
     def get_last_station(self):
         return self.stations[-1]
+
+    def get_first_station(self):
+        return self.stations[0]
+
+    def get_all_tracks(self, data):
+        tracks = []
+
+        for i in range(len(self.stations) - 1):
+            cur_station = self.stations[i]
+            next_station = self.stations[i + 1]
+
+            tracks.append(data.get_track(cur_station, next_station))
+
+        return tracks
 
 
 class StationNotConnectedError(Exception):

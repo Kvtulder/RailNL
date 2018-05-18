@@ -19,7 +19,7 @@ def greedy1(stations, tracks, num_of_lines, max_duration, num_of_critital_tracks
         route.remove_last_station()
         lines.append(route)
 
-    return get_score(lines, tracks), lines
+    return score.get_score(lines, tracks), lines
 
 # similar to greedy1 but with an extra constraint: line cant travel back to previously traveled track
 def greedy2(stations, tracks, num_of_lines, max_duration, num_of_critital_tracks=None):

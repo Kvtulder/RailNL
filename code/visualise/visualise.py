@@ -1,7 +1,7 @@
 from mpl_toolkits.basemap import Basemap
 import matplotlib.patches as mpatches
 import matplotlib.pyplot as plt
-import bin.environment
+
 
 
 class MapBoundaries:
@@ -17,12 +17,10 @@ map_netherlands = MapBoundaries(53.7, 50.7, 3.2130, 7.3)
 
 
 # Draws a map of the Netherlands with all stations and tracks
-def draw_map(map_boundaries=map_netherlands, lines=[]):
+def draw_map(data, lines=[], map_boundaries=map_netherlands):
 
     print("drawing a map...", end='', flush=True)
 
-    stations = bin.environment.get_stations()
-    tracks = bin.environment.get_tracks()
 
     lat = []
     long = []
@@ -30,13 +28,13 @@ def draw_map(map_boundaries=map_netherlands, lines=[]):
     longcritical = []
 
     # sort stations in two lists: critical and non-critical
-    for key in stations:
-        if stations[key].critical:
-            latcritical.append(float(stations[key].latitude))
-            longcritical.append(float(stations[key].longitude))
+    for key in data.stations:
+        if data.stations[key].critical:
+            latcritical.append(float(data.stations[key].latitude))
+            longcritical.append(float(data.stations[key].longitude))
         else:
-            lat.append(float(stations[key].latitude))
-            long.append(float(stations[key].longitude))
+            lat.append(float(data.stations[key].latitude))
+            long.append(float(data.stations[key].longitude))
 
 
     # draw a map of the netherlands
@@ -56,11 +54,11 @@ def draw_map(map_boundaries=map_netherlands, lines=[]):
 
 
     # draw the lines between the stations
-    for key in tracks:
-        x1, y1 = my_map(tracks[key].start.longitude,
-                        tracks[key].start.latitude)
-        x2, y2 = my_map(tracks[key].destination.longitude,
-                        tracks[key].destination.latitude)
+    for key in data.tracks:
+        x1, y1 = my_map(data.tracks[key].start.longitude,
+                        data.tracks[key].start.latitude)
+        x2, y2 = my_map(data.tracks[key].destination.longitude,
+                        data.tracks[key].destination.latitude)
 
         plt.plot([x1, x2], [y1, y2], 'grey')
 
