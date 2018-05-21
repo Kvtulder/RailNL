@@ -1,28 +1,11 @@
 import copy
-<<<<<<< HEAD
-from algorithms.alg_random import random2
-from score.score import get_score
-import random
-import bin.environment
-=======
 import algorithms as alg
 from score import score
-
->>>>>>> 6e0809505b8cf33a5cd0a73a8f41897ce71012f4
 
 lines = []
 used_tracks = {}
 
-def random_number(a, b):
-    if a > b:
-        print("Invalid interval")
-        return -1
-    return (b - a) * random.random() + a
-
-
 def hill_climber_random(steps, data):
-
-
 
     print("generating hill climber solution...", end='', flush=True)
 
@@ -45,7 +28,7 @@ def hill_climber_random(steps, data):
                 solution = new_solution
                 solution_score = new_score
 
-
-
     print("\t DONE")
     return solution_score, solution, score_evolution
+
+

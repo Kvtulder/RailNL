@@ -4,17 +4,17 @@ import numpy
 
 
 # draws histogram based on num(ber) of runs
-def hist(num, algorithm):
+def hist(num, algorithm, data):
 
-    print("creating hist of {} function...".format(algorithm.__name__), end='', flush=True)
-
+    print("creating hist of {} function...".format(algorithm.__name__),
+          end='', flush=True)
 
     best_score = 0
     best_solution = None
     scores = []
 
     for i in range(num):
-        test, lines = algorithm(7, 120)
+        test, lines = algorithm(data)
         scores.append(test)
         if test > best_score:
             best_solution = lines
@@ -27,8 +27,8 @@ def hist(num, algorithm):
     plt.plot(bins, normalfit, 'r')
     plt.xlabel("Score")
     plt.ylabel("Probability")
-    plt.title(
-        f"Random algorithm; N={num:d}; $\mu$={average:f} $\sigma$={standard_deviation:f}")
+    plt.title(f"Random algorithm; N={num:d}; "
+              f"$\mu$={average:f} $\sigma$={standard_deviation:f}")
 
     print("Random algorithm repeated {} times. Average score: {}."
           " Best score: {}".format(num, average, max(scores)))

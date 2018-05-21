@@ -90,6 +90,15 @@ class Line:
     def get_first_station(self):
         return self.stations[0]
 
+    def get_station(self, index):
+        return self.stations[index]
+
+    def get_alternative(self, index):
+
+        last_station = self.get_station(index - 1)
+        return last_station.connections
+
+     
     def get_all_tracks(self, data):
         tracks = []
 
