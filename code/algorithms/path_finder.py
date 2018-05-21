@@ -16,30 +16,28 @@ def dijkstra(start, end=None):
         # add items to queue
         while True:
             track = current_station.get_shortest_connection(used_tracks)
-            if track:
-                used_tracks.append(track)
-                destination = track.get_other_station(current_station)
+            if not track:
+                break
 
-                time = duration_to_current + track.duration
-                route = copy(routes[current_station.name])
-                route.append(destination)
+            used_tracks.append(track)
+            destination = track.get_other_station(current_station)
 
-                if destination.name not in durations:
-                    queue.append(destination)
+            time = duration_to_current + track.duration
+            route = copy(routes[current_station.name])
+            route.append(destination)
+
+            if destination.name not in durations:
+                queue.append(destination)
+                durations.update({destination.name: time})
+                routes.update({destination.name: route})
+
+                # check if station equals end station
+                if end and destination == end:
+                    return route, time
+            else:
+                if time < durations[destination.name]:
                     durations.update({destination.name: time})
                     routes.update({destination.name: route})
-
-                    # check if station equals end station
-                    if end and destination == end:
-                        return route, time
-                else:
-                    if time < durations[destination.name]:
-                        durations.update({destination.name: time})
-                        routes.update({destination.name: route})
-
-            else:
-                # no more tracks left, exit loop
-                break
 
         del queue[0]
 
@@ -66,14 +64,15 @@ def depth_first(start, end, max_duration, duration=0.0, route=[], routes=[]):
         if duration > max_duration:
             continue
 
-        newroute = copy(route)
-        newroute.append(destination)
+        new_route = copy(route)
+        new_route.append(destination)
 
         if destination == end:
-            routes.append(newroute)
+            routes.append(new_route)
         else:
             # limit max length
-                depth_first(destination, end, max_duration, duration, newroute, routes)
+                depth_first(destination, end, max_duration, duration,
+                            new_route, routes)
 
     return routes
 

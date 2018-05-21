@@ -5,6 +5,7 @@ from score import score
 lines = []
 used_tracks = {}
 
+
 def hill_climber_random(steps, data):
 
     print("generating hill climber solution...", end='', flush=True)
