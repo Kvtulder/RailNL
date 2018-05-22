@@ -2,6 +2,13 @@ from copy import copy
 
 
 def dijkstra(start, end=None):
+    """ Finds the fastest possible route between a given start and all possible
+    end points or a given end point
+
+    Keyword arguments:
+    start   -- the start station object
+    end     -- the end station object (default = None)
+    """
 
     # dict with all the stations and the time it takes to reach it
     durations = {start.name: 0}
@@ -45,11 +52,20 @@ def dijkstra(start, end=None):
 
 
 def depth_first(start, end, max_duration, duration=0.0, route=[], routes=[]):
+    """ Finds all the possible routes between a given start and end with a maximum
+    of n minutes.
 
+    :argument start:        the start station object
+    :argument end:          the end station object
+    :argument max_duration: the maximum duration of the solution in minutes
+
+    :returns a list with the found route(s)
+    """
     # add first station to the route list if empty
     if not route:
         route.append(start)
 
+    # loop over all the possible directions
     for key in start.connections:
 
         track = start.connections[key]
@@ -62,17 +78,20 @@ def depth_first(start, end, max_duration, duration=0.0, route=[], routes=[]):
                 continue
 
         if duration > max_duration:
+            # make sure the route does not exceed the max duration
             continue
 
+        # copy to make sure there is a new memory reference
         new_route = copy(route)
         new_route.append(destination)
 
         if destination == end:
+            # found the destination! append the route to the list
             routes.append(new_route)
         else:
-            # limit max length
-                depth_first(destination, end, max_duration, duration,
-                            new_route, routes)
+            # not reached the destination (yet), continue searching
+            depth_first(destination, end, max_duration, duration,
+                        new_route, routes)
 
     return routes
 
