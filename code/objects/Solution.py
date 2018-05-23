@@ -18,11 +18,8 @@ class Solution():
         else:
             self.score = 0
 
-
     def add_line(self, line):
         self.lines.append(line)
-
-        tracks = line.get_all_tracks()
 
         self.add_to_used_tracks(line)
 

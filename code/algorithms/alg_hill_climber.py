@@ -1,10 +1,10 @@
 import copy
+import random
+from random import randint
 import algorithms as alg
-import objects as obj
 from score import score
 import algorithms.helper.helper as helper
-import run as run
-import random
+
 
 
 lines = []
@@ -13,6 +13,8 @@ used_tracks = {}
 
 def hill_climber_random(steps, data, start_solution=None, change_amount=None):
     print("generating hill climber solution...", flush=True)
+    score_evolution = []
+    best_score = 0
 
     if not start_solution:
         start_solution = alg.random2(data)
@@ -22,9 +24,6 @@ def hill_climber_random(steps, data, start_solution=None, change_amount=None):
     initial_score = solution.score
     start_lookup_table = solution.start_lookup_table
 
-    score_evolution = []
-
-    best_score = 0
     for step in range(steps):
         lookup_table = copy.copy(start_lookup_table)
         score_evolution.append(solution.score)
@@ -49,13 +48,12 @@ def hill_climber_random(steps, data, start_solution=None, change_amount=None):
 
             print("Improvement:", new_score)
 
-
     if initial_score == solution.score:
         solution.score = 0
         print("No improvement on orginal found")
 
     print("\t DONE")
-    return solution
+    return solution, score_evolution
 
 def hill_climber_greedy(steps, data, start_solution=None, change_amount=2):
 
@@ -109,4 +107,45 @@ def hill_climber_greedy(steps, data, start_solution=None, change_amount=2):
         print("No improvement found")
 
     print("\t DONE")
-    return solution
+
+    return solution, score_evolution
+
+
+def hill_climber_mutation(steps, data, solution=None):
+
+    print("generating hill climber solution...", end='', flush=True)
+
+    if not solution:
+        solution_score, solution, evolution = hill_climber_random(1000, data)
+
+    solution_score = score.get_score(solution, data)
+
+    score_evolution = []
+
+    for step in range(steps):
+        score_evolution.append(solution_score)
+
+        # make mutation
+        for i in range(len(solution)):
+
+            new_solution = copy.copy(solution)
+
+            length = randint(2, len(new_solution.stations))
+            start = randint(0, len(new_solution.stations) - length)
+            end = start + length
+
+            start_station = new_solution.get_station(start)
+            end_station = new_solution.get_station(end)
+
+            route = alg.depth_first()
+
+
+            new_solution[i] = alg.random2(data, 1)[1][0]
+            new_score = score.get_score(new_solution, data)
+
+            if new_score > solution_score:
+                solution = new_solution
+                solution_score = new_score
+
+    print("\t DONE")
+    return solution_score, solution, score_evolution

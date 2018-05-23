@@ -2,6 +2,7 @@ import objects as obj
 from score import score
 import random
 
+
 # creates a random solution with two constrains: n tracks with a max duration of
 # n minutes and all the data.stations need to be connected. Returns the score and
 # the generated lines
