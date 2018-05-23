@@ -14,8 +14,6 @@ def invalid_long_tracks(line, connection, used_connections, data):
 
     line_tracks = line.get_all_tracks(data)
 
-
-
     if len(line_tracks) - 1 >= data.bound:
         if connection.key in line.stations[0].connections:
             if line_tracks[data.bound].duration > data.max_track_duration:
@@ -33,7 +31,7 @@ def invalid_max_tracks(line, connection, used_connections, data):
     if connection.key in used_connections or line.total_time + connection.duration > data.max_duration:
         return True
 
-    line_tracks = line.get_all_tracks(data)
+    line_tracks = line.get_all_tracks()
 
     if len(line_tracks) - 1 >= data.max_tracks:
         return True

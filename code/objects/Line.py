@@ -42,6 +42,8 @@ class Line:
                 "{} is not connected to {}".format(station.name,
                                                    destination.name))
 
+
+
     # calculates the total duration of the line
     def get_total_time(self):
         total = 0
@@ -90,14 +92,19 @@ class Line:
     def get_first_station(self):
         return self.stations[0]
 
-    def get_all_tracks(self, data):
+    def get_all_tracks(self):
         tracks = []
+        track = None
 
         for i in range(len(self.stations) - 1):
             cur_station = self.stations[i]
             next_station = self.stations[i + 1]
 
-            tracks.append(data.get_track(cur_station, next_station))
+            for key, connection in cur_station.connections.items():
+                if next_station == connection.destination or next_station == connection.start:
+                    track = connection
+                    break
+            tracks.append(track)
 
         return tracks
 

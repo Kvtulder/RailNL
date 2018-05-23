@@ -1,14 +1,17 @@
 import visualise as vis
 import algorithms.greedy_helper as gh
+import algorithms.helper as helper
+import algorithms.greedy_helper as gh
 
 # runs an algorithm multiple times
 # prints best results
 # plots path to it
-def multiple_runs(number, algorithm, data):
+def multiple_runs(number, algorithm, data, lookup_table=helper.lookup_score, invalid_function=gh.invalid):
     best_result = 0, []
 
+    best_results = []
+    new_results = []
     x_values = []
-    y_values = []
 
 
     for i in range(number):
@@ -17,26 +20,28 @@ def multiple_runs(number, algorithm, data):
         if new_result[0] > best_result[0]:
             best_result = new_result
 
-        y_values.append(best_result[0])
+        best_results.append(best_result[0])
+        new_results.append(new_result[0])
         x_values.append(i)
 
 
         print(i ,best_result[0])
 
     vis.print_results(algorithm, best_result, data)
+    vis.hist(new_results, best_result[1], data)
 
-    vis.plot_line(x_values, y_values)
+    vis.plot_line(x_values, best_results)
 
 
 # runs an algorithm multiple times
 # change max duration of a line over runs
-def multiple_runs_duration(number, algorithm, data):
+def multiple_runs_duration(number, algorithm, data, start_duration=180):
     best_result = 0, []
 
     x_values = []
     y_values = []
 
-    data.max_duration = 100
+    data.max_duration = start_duration
 
     for i in range(number):
         new_result = algorithm(data)
@@ -106,8 +111,9 @@ def multiple_runs_max_tracks(number, algorithm, data):
     variables = [[1, "max_tracks"]]
     data.set_test_variables(variables)
 
-    for i in range(20):
-        new_result = algorithm(data, gh.invalid_max_tracks)
+
+    for i in range(number):
+        new_result = algorithm(data, helper.lookup_score, gh.invalid_max_tracks)
 
         if new_result[0] > best_result[0]:
             best_result = new_result
@@ -120,5 +126,31 @@ def multiple_runs_max_tracks(number, algorithm, data):
 
     vis.print_results(algorithm, best_result, data)
     print(best_track_count)
+
+    vis.plot_line(x_values, y_values)
+
+# runs an algorithm multiple times
+# prints best results
+# plots path to it
+def multiple_runs_hill_climb(number, algorithm, data):
+    best_result = 0, []
+
+    x_values = []
+    y_values = []
+
+
+    for i in range(4000):
+        new_result = algorithm(number, data)
+
+        if new_result[0] > best_result[0]:
+            best_result = new_result
+
+        y_values.append(best_result[0])
+        x_values.append(i)
+
+
+        print(i ,best_result[0])
+
+    vis.print_results(algorithm, best_result, data)
 
     vis.plot_line(x_values, y_values)

@@ -1,19 +1,32 @@
 import csv
 from objects.Station import Station
 from objects.Track import Track
+import algorithms.greedy_helper as gh
+import algorithms.helper.helper as helper
+import score
+import test_tools as tt
 
 class Data:
-    def __init__(self, scope="Nationaal", all_critical=False):
+    def __init__(self, scope="Nationaal", all_critical=False, invalid_function=gh.invalid, lookup_table_function=helper.lookup_score):
+
         self.stations = {}
         self.tracks = {}
 
         self.station_file = None
         self.track_file = None
 
+        # sets scale of board
         self.set_scope(scope, all_critical)
 
+        # gets variable unique for this board
         self.num_crit_tracks = self.get_num_of_critical_tracks()
         self.points_per_crit = 1/self.num_crit_tracks * 10000
+        self.upperbound = tt.upperboundz(self)
+
+        # set parameters for greedy function
+        self.invalid_function = invalid_function
+        self.lookup_table_function = lookup_table_function
+
 
     def set_scope(self, scope, all_critical):
         if scope == "Nationaal":
@@ -23,8 +36,8 @@ class Data:
             self.max_duration = 120
             self.num_of_lines = 7
 
-        self.station_file = "../data/Stations" + scope + ".csv"
-        self.track_file = "../data/Connecties" + scope + ".csv"
+        self.station_file = "./data/Stations" + scope + ".csv"
+        self.track_file = "./data/Connecties" + scope + ".csv"
 
         self.load(all_critical)
 
@@ -62,6 +75,7 @@ class Data:
 
         print("\t\t DONE")
 
+
     def get_track(self, station_a, station_b):
 
         key1 = "{}-{}".format(station_a.name, station_b.name)
@@ -84,6 +98,8 @@ class Data:
                 num_of_critical += 1
 
         return num_of_critical
+
+
 
     # takes 2d list with variables and their name
     # creates variables in data

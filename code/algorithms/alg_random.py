@@ -12,7 +12,7 @@ def random1(data, num_of_lines=None, max_duration=None):
     if not max_duration:
         max_duration = data.max_duration
 
-    lines = []
+    solution = obj.Solution(data)
 
     for i in range(num_of_lines):
         start = random.choice(list(data.stations))
@@ -24,10 +24,10 @@ def random1(data, num_of_lines=None, max_duration=None):
             a.add_station_by_track(track)
 
         a.remove_last_station()
-        lines.append(a)
+        solution.add_line(a)
 
     # create random line
-    return score.get_score(lines, data), lines
+    return solution
 
 
 # same as random1 but with a extra constraint: A line can't go backwards over
@@ -39,7 +39,7 @@ def random2(data, num_of_lines=None, max_duration=None):
     if not max_duration:
         max_duration = data.max_duration
 
-    lines = []
+    solution = obj.Solution(data)
 
     for i in range(num_of_lines):
         used_tracks = {}
@@ -76,7 +76,7 @@ def random2(data, num_of_lines=None, max_duration=None):
 
         # total time is over max: remove the last one to fulfill the constraints
         a.remove_last_station()
-        lines.append(a)
+        solution.add_line(a)
 
     # create random line
-    return score.get_score(lines, data), lines
+    return solution

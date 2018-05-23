@@ -1,17 +1,12 @@
-from visualise.visualise import draw_map
 
-def print_results(algorithm, results, data):
+def print_results(algorithm, solution, data):
     print("\n")
-    print(algorithm.__name__, "score:", results[0])
-    print_stations(results[1])
-
-    draw_map(data, results[1])
+    print_stations(solution.lines)
+    print("theoretical upperbound:", data.upperbound)
+    print(algorithm.__name__, "score:", solution.score)
 
 def print_stations(lines):
 
     for line in lines:
-        print(line.total_time, ":", end='')
-        for station in line.stations:
-            print(station.name + ", ", end='')
+        print("{}".format(line))
 
-        print("")

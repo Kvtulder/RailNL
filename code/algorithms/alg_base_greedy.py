@@ -6,52 +6,43 @@ import algorithms.greedy_helper as gh
 # pure greedy search algorithm that searches best route from given station
 # it looks to both ends
 # constraints: cant return on itself
-def greedy_search(station, data, lookup_table, invalid_function):
+def greedy_search(station, data, lookup_table):
     used_connections = []
     ends = [station]
 
     new_line = obj.Line([station])
-
     line_completed = False
+
     while not line_completed:
-        best_connections_ends = {}
+        new_connections = {}
 
-        # find best connection for each end of route and then select best one
+        # find both end of route and collect all connections
         for end in ends:
-            connections = {**end.connections}
+            new_connections.update({**end.connections})
 
-            best_connection_end = helper.select_best_scoring_connection(connections, lookup_table)
+        best_connection = helper.select_best_scoring_connection(new_connections, lookup_table)
 
-            while invalid_function(new_line, best_connection_end, used_connections, data):
-                del connections[best_connection_end.key]
+        # check if adding connection would be allowed in constraint
+        while data.invalid_function(new_line, best_connection, used_connections, data):
+            del new_connections[best_connection.key]
 
-                if len(connections) == 0:
-                    best_connection_end = None
-                    break
-                else:
-                    best_connection_end = helper.select_best_scoring_connection(connections, lookup_table)
+            if len(new_connections) == 0:
+                line_completed = True
+                break
+            else:
+                best_connection = helper.select_best_scoring_connection(new_connections, lookup_table)
 
-            best_connections_ends.update({end.name: best_connection_end})
-
-        best_connection = helper.select_best_scoring_connection(best_connections_ends, lookup_table)
-
-        if not best_connection:
-            line_completed = True
+        if line_completed:
             continue
-
-        if best_connection.key in new_line.stations[0].connections:
-            insert_position = "first"
+        elif best_connection.key in new_line.stations[0].connections:
+            new_line.add_station_by_track(best_connection, "first")
         else:
-            insert_position = "last"
-        new_line.add_station_by_track(best_connection, insert_position)
+            new_line.add_station_by_track(best_connection, "last")
 
         used_connections.append(best_connection.key)
-
         ends = [new_line.stations[0], new_line.stations[-1]]
 
-    best_line = trim_line(new_line, data, lookup_table)
-
-    return best_line
+    return trim_line(new_line, data, lookup_table)
 
 
 # trims line so non-scoring tracks on the front or end of track are removed
@@ -67,13 +58,13 @@ def trim_line(line, data, lookup_table):
         track_end = data.get_track(line.stations[-1], line.stations[-2])
 
         if not end_done:
-            if lookup_table[track_end.key] < 0.5 * data.points_per_crit:
+            if lookup_table[track_end.key] < 0:
                 line.stations.pop()
             else:
                 end_done = True
 
         if not front_done:
-            if lookup_table[track_front.key] < 0.5 * data.points_per_crit:
+            if lookup_table[track_front.key] < 0:
                 line.stations.remove(line.stations[0])
             else:
                 front_done = True
