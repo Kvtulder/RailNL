@@ -4,7 +4,7 @@
 
 A project to create as efficient as possible routes between Dutch stations. 
 
-<img src="/images/map.png" alt="Map"/>
+<img src="/research/images/map1.png" alt="Map"/>
 
 ## Aan de slag (Getting Started)
 ### Verseisten (Prerequisites)
