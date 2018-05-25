@@ -1,13 +1,18 @@
-
-import algorithms.helper.helper as helper
+import helper as helper
 import algorithms as alg
 import objects as obj
 
 
-# calculates best route for all station and selects best one
-# removes score from used tracks and recalculates new best route
+
 def recalculating_greedy(data):
-    used_tracks = []
+    """ Calculates solution by calculating a greedy route for each station and choosing the highest scoring
+    Tracks of this route get there score removed and then calculates the best greedy route in this situation.
+    It combines these until all critical tracks are ridden on.
+
+    :argument data:         data class with all important static information about run, such as max_duration
+
+    :returns a solution containing lines, score and other board information
+    """
 
     # create lookup table for tracks with their score
     lookup_table = data.lookup_table_function(data)
@@ -25,10 +30,9 @@ def recalculating_greedy(data):
         best_line = helper.select_best_lines(possible_lines, solution.used_tracks, data, 1)
 
         if len(best_line.stations):
-            used_tracks = helper.update_used(best_line, used_tracks, lookup_table)
             solution.add_line(best_line)
+            helper.update_lookup
 
-    solution.lookup_table = lookup_table
 
     return solution
 

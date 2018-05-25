@@ -1,13 +1,13 @@
 import visualise as vis
 
-def run_hill_climber(algorithm, data, start_solution=[], times=10, steps=10000, change_amount=4, print_lines=True, map=False, line=False, hist=False):
+def run_hill_climber(algorithm, data, times=10, steps=10000, start_solution=[], print_lines=True, map=False, line=False, hist=False):
     best_solution = None
 
     best_solutions_scores = []
     new_solutions_scores = []
 
     for i in range(times):
-        new_solution = algorithm(steps, data, start_solution, change_amount)
+        new_solution = algorithm(steps, data, start_solution)
 
         if not best_solution:
             best_solution = new_solution

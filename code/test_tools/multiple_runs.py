@@ -1,12 +1,10 @@
 import visualise as vis
-import algorithms.greedy_helper as gh
-import algorithms.helper as helper
-import algorithms.greedy_helper as gh
+import helper as helper
 
 # runs an algorithm multiple times
 # prints best results
 # plots path to it
-def multiple_runs(number, algorithm, data, lookup_table=helper.lookup_score, invalid_function=gh.invalid):
+def multiple_runs(number, algorithm, data):
     best_result = 0, []
 
     best_results = []

@@ -1,13 +1,12 @@
 import csv
-from objects.Station import Station
-from objects.Track import Track
-import algorithms.greedy_helper as gh
-import algorithms.helper.helper as helper
-import score
+import objects as obj
+import helper as helper
 import test_tools as tt
 
 class Data:
-    def __init__(self, scope="Nationaal", all_critical=False, invalid_function=gh.invalid, lookup_table_function=helper.lookup_score):
+    def __init__(self, scope="Nationaal", all_critical=False, invalid_function=helper.invalid,
+                 lookup_table_function=helper.lookup_score):
+        self.max_tracks = 12
 
         self.stations = {}
         self.tracks = {}
@@ -26,7 +25,6 @@ class Data:
         # set parameters for greedy function
         self.invalid_function = invalid_function
         self.lookup_table_function = lookup_table_function
-
 
     def set_scope(self, scope, all_critical):
         if scope == "Nationaal":
@@ -51,11 +49,11 @@ class Data:
                 # check if there is a critical row
                 if len(row) > 3:
                     self.stations.update({
-                        row[0]: Station(row[0], row[1], row[2],
+                        row[0]: obj.Station(row[0], row[1], row[2],
                                         row[3] == 'Kritiek' or all_critical)})
                 else:
                     self.stations.update({
-                        row[0]: Station(row[0], row[1], row[2], all_critical)})
+                        row[0]: obj.Station(row[0], row[1], row[2], all_critical)})
 
         # add all tracks
         with open(self.track_file) as file:
@@ -66,7 +64,7 @@ class Data:
                 destination = self.stations[row[1]]
                 critical = start.critical or destination.critical
                 key = "{}-{}".format(row[0], row[1])
-                track = Track(start, destination, row[2], critical, key)
+                track = obj.Track(start, destination, row[2], critical, key)
 
                 self.tracks.update({key: track})
 
@@ -98,8 +96,6 @@ class Data:
                 num_of_critical += 1
 
         return num_of_critical
-
-
 
     # takes 2d list with variables and their name
     # creates variables in data

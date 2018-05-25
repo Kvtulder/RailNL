@@ -1,6 +1,5 @@
 from copy import copy
 
-
 def dijkstra(start, end=None):
     """ Finds the fastest possible route between a given start and all possible
     end points or a given end point

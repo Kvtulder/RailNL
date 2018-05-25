@@ -1,11 +1,15 @@
 
 class Line:
     def __init__(self, stations=[]):
+        self.track_used_twice = False
+
         self.stations = stations
         if len(stations) > 1:
             self.total_time = self.get_total_time()
+            self.tracks = self.get_all_tracks()
         else:
             self.total_time = 0
+            self.tracks = []
 
     def __format__(self, format_spec):
         if isinstance(format_spec, str):
@@ -37,6 +41,8 @@ class Line:
                 self.stations.append(destination)
 
             self.total_time += float(track.duration)
+            self.tracks.append(track)
+            self.update_track_used_twice()
         else:
             raise StationNotConnectedError(
                 "{} is not connected to {}".format(station.name,
@@ -102,7 +108,6 @@ class Line:
         for i in range(len(route)):
             self.stations.insert(start_index + i, route[i])
 
-
     def get_all_tracks(self):
         tracks = []
         track = None
@@ -118,6 +123,10 @@ class Line:
             tracks.append(track)
 
         return tracks
+
+    def update_track_used_twice(self):
+        if len(self.tracks) != len(set(self.tracks)):
+            self.track_used_twice =  True
 
 
 class StationNotConnectedError(Exception):

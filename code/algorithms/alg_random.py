@@ -48,6 +48,7 @@ def random2(data, num_of_lines=None, max_duration=None):
         start = random.choice(list(data.stations))
         a = obj.Line([data.stations[start]])
 
+
         while a.total_time < max_duration:
             station = a.stations[-1]
 

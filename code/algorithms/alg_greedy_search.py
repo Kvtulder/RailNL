@@ -1,15 +1,23 @@
 import objects as obj
-import algorithms.helper.helper as helper
-import algorithms.greedy_helper as gh
+import helper as helper
 
 
 # pure greedy search algorithm that searches best route from given station
 # it looks to both ends
 # constraints: cant return on itself
 def greedy_search(station, data, lookup_table):
-    used_connections = []
-    ends = [station]
+    """ Searches for the best route from given station. It does this be choosing the connection
+    with the highest given score, which are located in the lookup table.
 
+    :argument station:      station to start route from
+    :argument data:         overall information
+    :argument lookup_table: a dict holding within it each track and its corresponding score
+
+
+    :returns a line containing its track, station and duration
+    """
+
+    ends = [station]
     new_line = obj.Line([station])
     line_completed = False
 
@@ -23,7 +31,7 @@ def greedy_search(station, data, lookup_table):
         best_connection = helper.select_best_scoring_connection(new_connections, lookup_table)
 
         # check if adding connection would be allowed in constraint
-        while data.invalid_function(new_line, best_connection, used_connections, data):
+        while data.invalid_function(new_line, best_connection, data):
             del new_connections[best_connection.key]
 
             if len(new_connections) == 0:
@@ -39,7 +47,6 @@ def greedy_search(station, data, lookup_table):
         else:
             new_line.add_station_by_track(best_connection, "last")
 
-        used_connections.append(best_connection.key)
         ends = [new_line.stations[0], new_line.stations[-1]]
 
     return trim_line(new_line, data, lookup_table)
