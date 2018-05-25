@@ -2,10 +2,8 @@ import visualise as vis
 import helper as helper
 
 
-def run_greedy(algorithm, data, times=10000,
-               lookup_function=helper.lookup_score,
-               invalid_functie=helper.invalid,
-                print_lines=True, map=False, line=False, hist=False):
+def run_greedy(algorithm, data, times=10000, lookup_function=helper.lookup_score,
+               invalid_functie=helper.invalid, print_lines=True, map=False, line=False, hist=False):
 
     # set possible heuristics
     data.lookup_table_function = lookup_function
