@@ -5,7 +5,9 @@ import objects as obj
 
 
 def recalculating_greedy(data):
-    """ Calculates solution by calculating a greedy route for each station and choosing the highest scoring
+    """
+    Calculates solution by calculating a greedy route for each station and
+    choosing the highest scoring
     Tracks of this route get there score removed and then calculates the best greedy route in this situation.
     It combines these until all critical tracks are ridden on.
 

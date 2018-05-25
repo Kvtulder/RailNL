@@ -6,7 +6,8 @@ import helper as helper
 # it looks to both ends
 # constraints: cant return on itself
 def greedy_search(station, data, lookup_table):
-    """ Searches for the best route from given station. It does this be choosing the connection
+    """
+    Searches for the best route from given station. It does this be choosing the connection
     with the highest given score, which are located in the lookup table.
 
     :argument station:      station to start route from

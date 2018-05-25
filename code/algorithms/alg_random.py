@@ -1,7 +1,6 @@
 import objects as obj
 import random
 
-
 def random1(data, num_of_lines=None, max_duration=None):
     """ creates a random solution with two constrains: n tracks with a max duration of
     n minutes and all the data.stations need to be connected.
@@ -37,17 +36,16 @@ def random1(data, num_of_lines=None, max_duration=None):
 
 
 def random2(data, num_of_lines=None, max_duration=None):
-    """ creates a random solution with two constrains: n tracks with a max duration of
-    n minutes and all the data.stations need to be connected. Plus a line can't go backwards over
-    the same track.
-
-    :argument data:         a class with all important static information about run, such as max_duration
-    :argument num_of_lines  maximum number of lines that can be ridden
-    :argument max_duration  maximum duration that lines can be
-
-    :returns a solution with the score and the generated lines.
     """
+    Creates random lines with a maximum duration with a extra constraint:
+    trains can't go back to their previous station
 
+    :param data: the data object containing information about the environment
+    :param num_of_lines: the amount of lines to be created
+    :param max_duration: the maximum duration of a single lines
+
+    :return: a set of lines
+    """
     if not num_of_lines:
         num_of_lines = data.num_of_lines
 
