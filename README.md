@@ -39,7 +39,7 @@ In de map alt bevind zich nog een file met twee varianten hill climber. Dit omda
 ## Test (Testing)
 Alle algoritmes kunnen getest worden in de main.py met behulp van scripts uit de run folder. Van alledrie is hiervan een voorbeeld te vinden in main.py. Dit gaat als volgt:
 
-#### Stap 1
+### Stap 1
 Initieer het data object door aan te geven welke kaart gebruikt gaat worden en of alle sporen kritiek zijn.
 
 ```
@@ -48,10 +48,10 @@ critical = False
 
 data = obj.Data(map, critical)
 ```
-#### Stap 2
+### Stap 2
 Kies een van de volgende drie scripts:
 
-##### run_random
+#### run_random
 Geschikt voor het runnen van het random algoritme (alg.random2)
 ###### Verplicht mee te geven:
 Algoritme, data
@@ -61,7 +61,7 @@ Aantal keer runnen (standaard 10.0000)
 run.run_random(alg.random2, data, 100)
 ```
 
-##### run_greedy
+#### run_greedy
 Geschikt voor het runnen van de twee greedy algoritmes (alg.greedy_random en alg.recalculating_greedy). 
 ###### Verplicht
 Algoritme, data
@@ -75,7 +75,7 @@ De laatste twee worden gebruikt voor heuristieken binnen greedy, zie hun beschri
 run.run_greedy(alg.greedy_random, data, 100, helper.lookup_predicting, helper.invalid_fuck_heerlen)
 ```
 
-##### run_hill_climber
+#### run_hill_climber
 Geschikt voor het runnen van van de hill-climber algoritmes (alg.hill_climber_random en alg.hill_climber_multi_greedy, en hun counterparst in de alt folder.). 
 ###### Verplicht
 Algoritme, data
@@ -91,7 +91,8 @@ Het aantal trajecten dat per gewisseld worden (standaard 2)
 ```
 run.run_hill_climber(alg.hill_climber_multi_greedy, data, 10, 1000, solution, 4)
 ```
-##### voor alle scripts
+
+#### voor alle scripts
 Bij alle scripts kunnen aan het einde worden gekozen voor het laten printen van de trajecten, een kaartje, grafiek en een histogram. Dit wordt gedaan door na alle andere argumenten voor elk onderdeel respectievelijk True of False toe te voegen. Standaard staat dit alleen op printen van de trajecten en kan het verder met rust gelaten worden.
 
 (printen lijnen, kaartje, grafiek, histogram)
