@@ -4,7 +4,10 @@
 
 A project to create as efficient as possible routes between Dutch stations. 
 
-<img src="/images/map.png" alt="Map"/>
+<img src="/research/images/map1.png" alt="Map"/>
+
+## Het project
+Wij hebben met verschillende algoritmes geprobeerd om zo'n hoogst mogelijk scorende lijnvoering te maken tussen intercity stations in Nederland en Holland. Een complex probleem, maar ook zeer interessant. Aldus zie hier onze resultaten!
 
 ## Aan de slag (Getting Started)
 ### Verseisten (Prerequisites)
