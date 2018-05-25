@@ -5,13 +5,15 @@ import helper as helper
 
 
 def alt_hill_climber_greedy(steps, data, solution=None):
-    """ Builds on a starting route by replacing each existing line
+    """
+    Builds on a starting route by replacing each existing line
     with a new greedy line, one by one. Is roughly equivalent to random function
     in main hill_climber file, but has been found to work less wel with greedy
 
-    :argument steps:        amount of times algorithm has to replace a line
-    :argument data:         data class with all important static information about run, such as max_duration
-    :argument solution:     a possible pre-existing solution, standard =None, then it will create
+    :param steps:        amount of times algorithm has to replace a line
+    :param data:         data class with all important static information about
+                        run, such as max_duration
+    :param solution:     a possible pre-existing solution (default None)
 
     :returns a solution containing lines, score and other board information
     """
@@ -50,14 +52,17 @@ def alt_hill_climber_greedy(steps, data, solution=None):
 
 
 def alt_hill_climber_multi_random(steps, data, solution=None, change_amount=2):
-    """ Builds on a starting route randomly deleting multiple routes and replacing them with new ones.
+    """
+    Builds on a starting route randomly deleting multiple routes and
+    replacing them with new ones.
     Is roughly equivalent to greedy function in main hill_climber file,
     but has been found to work less wel with random
 
-    :argument steps:        amount of times algorithm has to replace a line
-    :argument data:         data class with all important static information about run, such as max_duration
-    :argument change_amount:determines amount of lines swapped out
-    :argument solution:     a possible pre-existing solution, standard =None, then it will create
+    :argument steps:            amount of times algorithm has to replace a line
+    :argument data:             data class with all important static information
+                                about run, such as max_duration
+    :argument change_amount:    determines amount of lines swapped out
+    :argument solution:         a possible pre-existing solution (default=None)
 
     :returns a solution containing lines, score and other board information
     """
@@ -83,7 +88,8 @@ def alt_hill_climber_multi_random(steps, data, solution=None, change_amount=2):
             new_solution.remove_line(random.choice(list(new_solution.lines)))
 
         # find new lines to complete the solution
-        while len(new_solution.used_tracks) < data.num_crit_tracks and len(new_solution.lines) != data.num_of_lines:
+        while len(new_solution.used_tracks) < data.num_crit_tracks and \
+                len(new_solution.lines) != data.num_of_lines:
             new_line = alg.random2(data, 1).lines[0]
 
             new_solution.add_line(new_line)

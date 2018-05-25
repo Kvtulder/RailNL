@@ -1,9 +1,9 @@
 import visualise as vis
 import helper as helper
 
-
 def run_hill_climber(algorithm, data, times=10, steps=10000, start_solution=[], change_amount=2,
                      print_lines=True, map=False, line=False, hist=False):
+
     best_solution = None
 
     best_solutions_scores = []

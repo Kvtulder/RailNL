@@ -1,7 +1,17 @@
-# gets score based on amount of critical tracks ridden, lines and time used
-# but also checks for previously used tracks so it doesnt award points for covering them
 def get_score(lines, data, used_tracks=[]):
+    """
+    gets score based on amount of critical tracks ridden, lines and time used
+    but also checks for previously used tracks so it doesnt award points for
+    covering them
 
+    :param lines:           the lines of the solution
+    :param data:            the data object which contains the information
+                            about the environment
+    :param used_tracks:     a list with the ridden tracks (default None)
+    :return:                the score as a float
+    """
+
+    # make sure you can also submit a single line
     if not isinstance(lines, list):
         lines = [lines]
 
@@ -40,7 +50,6 @@ def get_score(lines, data, used_tracks=[]):
 
 
 def score_track(track, data):
-
     crit_points = data.points_per_crit
 
     if track.critical:

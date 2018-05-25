@@ -9,7 +9,7 @@ def recalculating_greedy(data):
     Tracks of this route get there score removed and then calculates the best greedy route in this situation.
     It combines these until all critical tracks are ridden on.
 
-    :argument data:         data class with all important static information about run, such as max_duration
+    :argument data:   ata class with all important static information about run, such as max_duration
 
     :returns a solution containing lines, score and other board information
     """

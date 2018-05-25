@@ -19,6 +19,7 @@ def select_best_lines(lines, used_tracks, data, num_of_lines=0):
 
     return best_lines
 
+
 # sorts lines and returns best score
 def sort_lines_on_score(lines, used_tracks, data):
     lines_and_scores = []
