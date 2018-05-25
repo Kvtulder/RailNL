@@ -34,8 +34,8 @@ class Data:
             self.max_duration = 120
             self.num_of_lines = 7
 
-        self.station_file = "./data/Stations" + scope + ".csv"
-        self.track_file = "./data/Connecties" + scope + ".csv"
+        self.station_file = "../data/Stations" + scope + ".csv"
+        self.track_file = "../data/Connecties" + scope + ".csv"
 
         self.load(all_critical)
 
