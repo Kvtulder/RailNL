@@ -1,8 +1,26 @@
 import visualise as vis
-import helper as helper
 
 def run_hill_climber(algorithm, data, times=10, steps=10000, start_solution=[], change_amount=2,
                      print_lines=True, map=False, line=False, hist=False):
+    """ runs a hill-climber algorithm multiple times
+
+    :argument algorithm:        the algorithm that is to be used,
+                                in this case of the greedy family
+    :argument data:             a class with all important static information
+                                about run, such as max_duration
+    :argument times:            times the algorithm is run
+    :argument steps:            amount of steps the hill-climber takes
+    :argument start_solution:   an already created solution serving as start
+                                point for the hill climber
+    :argument change_amount:    amount of tracks that will be swapped in
+                                hill_climber_multi
+    :argument print_lines:      determines if lines will be printed
+    :argument map:              determines if map will be printed
+    :argument line:             determines if line graph will be printed
+    :argument hist:             determines if histogram will be printed
+
+    :returns best solution with the score and the generated lines.
+    """
 
     best_solution = None
 
@@ -36,5 +54,6 @@ def run_hill_climber(algorithm, data, times=10, steps=10000, start_solution=[], 
 
     if line:
         vis.plot_line(best_solutions_scores)
+
 
     return best_solution
