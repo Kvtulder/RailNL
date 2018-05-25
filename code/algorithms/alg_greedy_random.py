@@ -6,7 +6,8 @@ import random
 
 
 def greedy_random(data):
-    """ Finds a solution using the greedy algorithm and random starting stations
+    """
+     Finds a solution using the greedy algorithm and random starting stations
 
     Keyword arguments:
     :argument data:     contains stations, tracks and lookup table function
@@ -20,8 +21,9 @@ def greedy_random(data):
     # create object to collect all routes and used_tracks in
     solution = obj.Solution(data)
 
-    # create greedy lines from random start stations to complete set of lines (solution)
-    while solution.num_of_crit < data.num_crit_tracks and len(solution.lines) != data.num_of_lines:
+    # create greedy lines from random start stations to complete set of lines
+    while solution.num_of_crit < data.num_crit_tracks and len(solution.lines) \
+            != data.num_of_lines:
         start_station = data.stations[random.choice(list(data.stations))]
 
         station_line = alg.greedy_search(start_station, data, lookup_table)

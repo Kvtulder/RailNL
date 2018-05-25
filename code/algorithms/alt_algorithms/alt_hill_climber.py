@@ -58,11 +58,11 @@ def alt_hill_climber_multi_random(steps, data, solution=None, change_amount=2):
     Is roughly equivalent to greedy function in main hill_climber file,
     but has been found to work less wel with random
 
-    :argument steps:            amount of times algorithm has to replace a line
-    :argument data:             data class with all important static information
+    :param steps:            amount of times algorithm has to replace a line
+    :param data:             data class with all important static information
                                 about run, such as max_duration
-    :argument change_amount:    determines amount of lines swapped out
-    :argument solution:         a possible pre-existing solution (default=None)
+    :param change_amount:    determines amount of lines swapped out
+    :param solution:         a possible pre-existing solution (default=None)
 
     :returns a solution containing lines, score and other board information
     """

@@ -1,12 +1,13 @@
 from copy import copy
 
 def dijkstra(start, end=None):
-    """ Finds the fastest possible route between a given start and all possible
+    """
+    Finds the fastest possible route between a given start and all possible
     end points or a given end point
 
     Keyword arguments:
-    start   -- the start station object
-    end     -- the end station object (default = None)
+    :param start:       the start station object
+    :param end:         the end station object (default = None)
     """
 
     # dict with all the stations and the time it takes to reach it

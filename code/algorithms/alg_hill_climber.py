@@ -7,7 +7,8 @@ import helper as helper
 
 
 def hill_climber_random(steps, data, solution=None):
-    """ Builds on a (random) starting route by replacing each existing line
+    """
+    Builds on a (random) starting route by replacing each existing line
     with a random new line, one by one
 
     :argument steps:        amount of times algorithm has to replace a line
@@ -43,8 +44,8 @@ def hill_climber_random(steps, data, solution=None):
 
 
 def hill_climber_multi_greedy(steps, data, solution=None, change_amount=2):
-    """ Builds on a starting route randomly deleting multiple routes and replacing them with new ones.
-
+    """
+    Builds on a starting route randomly deleting multiple routes and replacing them with new ones.
 
     :argument steps:        amount of times algorithm has to replace a line
     :argument data:         data class with all important static information about run, such as max_duration
@@ -109,13 +110,17 @@ def hill_climber_multi_greedy(steps, data, solution=None, change_amount=2):
 
 def hill_climber_mutation(steps, data, solution=None):
 
-    print("generating hill climber solution...", end='', flush=True)
+    """
+    Builds on a starting route randomly deleting parts of multiple routes and
+    replacing them with new parts.
 
-    if not solution:
-        solution_score, solution, evolution = hill_climber_random(1000, data)
+    :argument steps:        amount of times algorithm has to replace a line
+    :argument data:         data class with all important static information about run, such as max_duration
+    :argument change_amount:determines amount of lines swapped out
+    :argument solution:     a possible pre-existing solution, standard =None, then it will create
 
-    solution_score = score.get_score(solution, data)
-
+    :returns a solution containing lines, score and other board information
+    """
     score_evolution = []
 
     for step in range(steps):
@@ -126,17 +131,29 @@ def hill_climber_mutation(steps, data, solution=None):
 
             new_solution = copy.copy(solution)
 
-            length = randint(2, len(new_solution.stations))
-            start = randint(0, len(new_solution.stations) - length)
+            length = randint(2, len(new_solution[i].stations) - 1)
+            start = randint(0, len(new_solution[i].stations) - length - 1)
             end = start + length
 
-            start_station = new_solution.get_station(start)
-            end_station = new_solution.get_station(end)
+            start_station = new_solution[i].get_station(start)
+            end_station = new_solution[i].get_station(end)
 
-            route = alg.depth_first()
+            time_over = data.max_duration - new_solution[i].get_total_time()
+            time_available = time_over + new_solution[i].get_total_time(start, end)
 
+            print("start {}; end; {}".format(start_station.name, end_station.name))
+            print("time {}".format(time_available))
+            routes = alg.depth_first(start_station, end_station, time_available)
+            print("test")
+            if not routes:
+                continue
+            print("gevonden route")
+            route = routes[0]
+            for station in route:
+                print(station.name, end=', ')
 
-            new_solution[i] = alg.random2(data, 1)[1][0]
+            print("")
+            new_solution[i].insert_station(start, end, route)
             new_score = score.get_score(new_solution, data)
 
             if new_score > solution_score:
