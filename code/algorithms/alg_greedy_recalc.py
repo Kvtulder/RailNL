@@ -17,9 +17,9 @@ def recalculating_greedy(data):
     # create lookup table for tracks with their score
     lookup_table = data.lookup_table_function(data)
 
-    solution = obj.Solution(data, lookup_table)
+    solution = obj.Solution(data)
 
-    while len(solution.used_tracks) < data.num_crit_tracks and len(solution.lines) != data.num_of_lines:
+    while solution.num_of_crit < data.num_crit_tracks and len(solution.lines) != data.num_of_lines:
         possible_lines = []
 
         # create a line from each station
@@ -31,7 +31,7 @@ def recalculating_greedy(data):
 
         if len(best_line.stations):
             solution.add_line(best_line)
-            helper.update_lookup
+            helper.update_lookup(best_line, lookup_table)
 
 
     return solution

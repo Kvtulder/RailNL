@@ -42,11 +42,12 @@ def lookup_time(data):
         lookup_table.update({track.key: - track.duration})
     return lookup_table
 
+# updates lookup by
 def update_lookup(line, look_up):
     tracks = line.get_all_tracks()
 
     for track in tracks:
-        look_up[track.key] = - track.duration / 10 - 50
+        look_up[track.key] = - track.duration / 10
 
     return look_up
 

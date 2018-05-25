@@ -26,7 +26,6 @@ def greedy_random(data):
 
         station_line = alg.greedy_search(start_station, data, lookup_table)
 
-
         if len(station_line.stations) > 1:
             # adds line and updates lookup table and used_tracks
             solution.add_line(station_line)
@@ -34,7 +33,6 @@ def greedy_random(data):
             # update lookup table to resemble new reality
             lookup_table = helper.update_lookup(station_line, lookup_table)
 
-    solution.lookup_table = lookup_table
     solution.score = score.get_score(solution.lines ,data)
 
     return solution

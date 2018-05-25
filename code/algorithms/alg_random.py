@@ -1,5 +1,4 @@
 import objects as obj
-from score import score
 import random
 
 

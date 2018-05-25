@@ -1,11 +1,11 @@
+# checks if connection is valid by checking if max_duration is not exceeded and track not already in use
 def invalid(line, connection, data):
     if connection in line.tracks or line.total_time + connection.duration > data.max_duration:
         return True
 
     return False
 
-
-# checks if route is valid
+# checks if route is valid, but specifically allows the Sittard Heerlen track to be ridden double
 def invalid_fuck_heerlen(line, connection, data):
     use_twice_used = False
     poor_connections = False
@@ -22,6 +22,7 @@ def invalid_fuck_heerlen(line, connection, data):
 
     return True
 
+# checks if valid, but allows certain connections with low amount of connecting tracks to be ridden double
 def invalid_twice(line, connection, data):
     use_twice_used = False
     poor_connections = False
@@ -32,10 +33,28 @@ def invalid_twice(line, connection, data):
     if not line.track_used_twice and poor_connections:
         use_twice_used = True
 
-
     if not connection in line.tracks or use_twice_used:
         if line.total_time + connection.duration <= data.max_duration:
             return False
+
+    return True
+
+# checks if valid, but only allows certain amount of tracks
+def invalid_max_tracks(line, connection, data):
+
+    use_twice_used = False
+    poor_connections = False
+
+    if len(connection.destination.connections) == 1 or len(connection.start.connections) == 1:
+        poor_connections = True
+
+    if not line.track_used_twice and poor_connections:
+        use_twice_used = True
+
+    if not connection in line.tracks or use_twice_used:
+        if line.total_time + connection.duration <= data.max_duration:
+            if len(line.tracks) - 1 < data.max_tracks:
+                return False
 
     return True
 
@@ -56,25 +75,4 @@ def invalid_long_tracks(line, connection, used_connections, data):
                 return True
 
     return False
-
-
-# also checks if number of tracks in line doesnt exceed maximum
-def invalid_max_tracks(line, connection, data):
-
-    use_twice_used = False
-    poor_connections = False
-
-    if len(connection.destination.connections) == 1 or len(connection.start.connections) == 1:
-        poor_connections = True
-
-    if not line.track_used_twice and poor_connections:
-        use_twice_used = True
-
-
-    if not connection in line.tracks or use_twice_used:
-        if line.total_time + connection.duration <= data.max_duration:
-            if len(line.tracks) - 1 < data.max_tracks:
-                return False
-
-    return True
 

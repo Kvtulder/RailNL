@@ -60,7 +60,7 @@ def hill_climber_multi_greedy(steps, data, solution=None, change_amount=2):
 
     initial_score = solution.score
 
-    if not solution.lookup_table:
+    if not solution:
         start_lookup_table = data.lookup_table_function(data)
     else:
         start_lookup_table = solution.lookup_function(data)

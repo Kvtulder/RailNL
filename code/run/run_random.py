@@ -1,6 +1,6 @@
 import visualise as vis
 
-def run_random_alg(algorithm, data, times=10000, print_lines=True, map=False, line=False, hist=False):
+def run_random(algorithm, data, times=10000, print_lines=True, map=False, line=False, hist=False):
     best_solution = None
 
     best_solutions_scores = []
@@ -16,7 +16,6 @@ def run_random_alg(algorithm, data, times=10000, print_lines=True, map=False, li
 
         new_solutions_scores.append(new_solution.score)
         best_solutions_scores.append(best_solution.score)
-
 
     if print_lines:
         vis.print_results(algorithm, best_solution, data)
