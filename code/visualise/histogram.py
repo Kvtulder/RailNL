@@ -3,13 +3,13 @@ import matplotlib.mlab as mlab
 import numpy
 
 
-# draws histogram based on num(ber) of runs
 
 def hist(results, best_solution):
 
+    """draws histogram based on num(ber) of runs """
+
     num = len(results)
     scores = results
-
 
     standard_deviation = numpy.std(scores)
     average = sum(scores) / len(scores)

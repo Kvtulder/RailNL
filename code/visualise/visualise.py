@@ -16,8 +16,14 @@ class MapBoundaries:
 map_netherlands = MapBoundaries(53.7, 50.7, 3.2130, 7.3)
 
 
-# Draws a map of the Netherlands with all stations and tracks
 def draw_map(data, lines=[], map_boundaries=map_netherlands):
+    """
+    Draws a map of the Netherlands with all stations and tracks
+    :param data:
+    :param lines:
+    :param map_boundaries:
+    :return:
+    """
 
     print("drawing a map...", end='', flush=True)
 

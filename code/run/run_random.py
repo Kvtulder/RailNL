@@ -1,6 +1,8 @@
 import visualise as vis
 
-def run_random(algorithm, data, times=10000, print_lines=True, map=False, line=False, hist=False):
+
+def run_random(algorithm, data, times=10000, print_lines=True, map=False,
+               line=False, hist=False):
     best_solution = None
 
     best_solutions_scores = []
