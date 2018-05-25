@@ -9,7 +9,7 @@ def lookup_score(data):
         lookup_tracks_score.update({track.key: score.score_track(track, data)})
     return lookup_tracks_score
 
-
+# creates lookup table using the score per track, but giving a random modifier to spice things up
 def lookup_score_random(data):
     lookup_table = {}
 
@@ -42,7 +42,7 @@ def lookup_time(data):
         lookup_table.update({track.key: - track.duration})
     return lookup_table
 
-# updates lookup by
+# updates lookup by resetting used values to just their cost
 def update_lookup(line, look_up):
     tracks = line.get_all_tracks()
 
