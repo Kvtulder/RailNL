@@ -104,5 +104,9 @@ run.run_random(alg.random2, data, 100, True, True, True, True)
 
 ## Dankwoord (Acknowledgments)
 * De geweldige Maarten van den Sande
-* StackOverflow
 * minor programmeren van de UvA
+* Daan 'Heur' van den Berg
+* Quinten 'model programmeur' van der Post
+
+
+
