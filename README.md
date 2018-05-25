@@ -106,7 +106,6 @@ run.run_random(alg.random2, data, 100, True, True, True, True)
 * Tijs Teulings
 
 ## Dankwoord (Acknowledgments)
-* De geweldige Maarten van den Sande
 * minor programmeren van de UvA
 * Daan 'Heur' van den Berg
 * Quinten 'model programmeur' van der Post
