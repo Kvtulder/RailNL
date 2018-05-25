@@ -6,6 +6,9 @@ A project to create as efficient as possible routes between Dutch stations.
 
 <img src="/research/images/map1.png" alt="Map"/>
 
+## Het project
+Wij hebben met verschillende algoritmes geprobeerd om zo'n hoogst mogelijk scorende lijnvoering te maken tussen intercity stations in Nederland en Holland. Een complex probleem, maar ook zeer interessant. Aldus zie hier onze resultaten!
+
 ## Aan de slag (Getting Started)
 ### Verseisten (Prerequisites)
 Deze codebase is volledig geschreven in Python3.6.4. In requirements.txt staan de alle* benodigde libraries. Deze zijn grotendeels gemakkelijk te installeren via pip dmv. de volgende instructie:
