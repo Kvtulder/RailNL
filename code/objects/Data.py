@@ -7,7 +7,6 @@ class Data:
     def __init__(self, scope="Nationaal", all_critical=False,
                  invalid_function=helper.invalid,
                  lookup_table_function=helper.lookup_score):
-        self.max_tracks = 12
 
         self.stations = {}
         self.tracks = {}

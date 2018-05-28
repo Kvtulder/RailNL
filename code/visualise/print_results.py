@@ -4,6 +4,7 @@ def print_results(algorithm, solution, data):
     print_stations(solution.lines)
     print("theoretical upperbound:", data.upperbound)
     print(algorithm.__name__, "score:", solution.score)
+    print("")
 
 
 def print_stations(lines):
