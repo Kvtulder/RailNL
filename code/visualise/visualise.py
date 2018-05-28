@@ -14,9 +14,10 @@ class MapBoundaries:
 
 # define constants
 map_netherlands = MapBoundaries(53.7, 50.7, 3.2130, 7.3)
+map_holland = MapBoundaries(53.2, 51.5, 3.5130, 5.5)
 
 
-def draw_map(data, lines=[], map_boundaries=map_netherlands):
+def draw_map(data, lines=[], map_boundaries=[]):
     """
     Draws a map of the Netherlands with all stations and tracks
     :param data:
@@ -27,11 +28,18 @@ def draw_map(data, lines=[], map_boundaries=map_netherlands):
 
     print("drawing a map...", end='', flush=True)
 
-
     lat = []
     long = []
     latcritical = []
     longcritical = []
+
+
+    if not map_boundaries:
+
+        if data.station_file[16:] == "Nationaal.csv":
+            map_boundaries = map_netherlands
+        else:
+            map_boundaries = map_holland
 
     # sort stations in two lists: critical and non-critical
     for key in data.stations:
@@ -56,7 +64,6 @@ def draw_map(data, lines=[], map_boundaries=map_netherlands):
     my_map.drawcoastlines()
     my_map.drawcountries()
     my_map.fillcontinents(color='moccasin')
-
 
 
     # draw the lines between the stations

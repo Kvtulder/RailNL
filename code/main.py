@@ -2,6 +2,7 @@ import objects as obj
 import algorithms as alg
 import helper as helper
 import run as run
+
 '''
 Callable algorithms:
 alg.random2
@@ -14,10 +15,11 @@ alg.hill_climber_mutation
 
 def main():
     map = "Nationaal"
-    critical = False
+    critical = True
 
     data = obj.Data(map, critical)
-    solution = run.run_random(alg.random2, data, 10)
+
+    solution = run.run_random(alg.random1, data, 100)
 
     run.run_greedy(alg.greedy_random, data, 100, helper.lookup_score, helper.invalid)
 
